@@ -1,0 +1,70 @@
+Build an interactive Solar System Explorer web app. Use Node.js with TypeScript, Vite, React, React Router v6, Three.js (@react-three/fiber, @react-three/drei).
+
+## Core Features
+
+1. **Home page**: Hero section with "Explore the Solar System" title, a search bar to find celestial bodies by name/description, a grid of 8 planet cards, and category cards grouping bodies (Stars, Planets, Dwarf Planets, Moons, Belts & Regions, Other Phenomena).
+
+2. **3D interactive view** (`/solar-system-3d`):
+   - Sun at center with emissive glow
+   - All 8 planets on elliptical orbits with correct eccentricity and inclination
+   - Moons orbit their parent planet (not the Sun)
+   - Asteroid belt, Kuiper belt, Trojan asteroid swarm as particle systems
+   - Click any body to focus camera; click orbit ring to select the body
+   - Hover labels showing body name
+   - Speed controls: 0.25x, 0.5x, 1x, 2x, 5x, pause/play
+   - Reset view button
+   - Stars background (3000+ particles)
+   - OrbitControls for drag/zoom/pan
+
+3. **Detail pages** (`/body/:id`):
+   - Physical characteristics table (diameter, mass, gravity, escape velocity, temperature, day length)
+   - Orbital characteristics table (distance from Sun, orbital period, eccentricity, inclination, orbital speed)
+   - Composition section
+   - Atmosphere with horizontal percentage bars
+   - Exploration missions with agency, year, description
+   - Highlights and interesting facts
+   - List of moons (if applicable)
+
+4. **About page** (`/about`):
+   - Mission description
+   - What's included (all body types)
+   - Reference links to NASA, ESA, JPL, specific missions
+   - Tech stack badges
+
+## Data Requirements
+
+Include 27+ celestial bodies with detailed physical and orbital data:
+- Sun (type: star)
+- 8 planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+- Earth's Moon
+- 5 major moons: Io, Europa, Ganymede, Callisto (Jupiter), Titan (Saturn), Enceladus (Saturn), Triton (Neptune), Charon (Pluto)
+- Dwarf planets: Pluto, Ceres
+- Belts: Asteroid Belt, Kuiper Belt, Oort Cloud, Trojan Asteroids
+- Other: Lagrange Points
+
+Each body needs: id, name, type, parentId, description, physicalCharacteristics (diameter_km, mass_kg, surfaceGravity_m_s2, escapeVelocity_km_s, meanTemperature_C, axialTilt_degrees, dayLength), orbitalCharacteristics (distanceFromSun_au, orbitalPeriod_years, orbitalPeriod_days, eccentricity, inclination_degrees, orbitalSpeed_km_s), atmosphere (composition array with element/percentage + description), composition, moons list, exploration (missions array + highlights), interestingFacts[], color, radius.
+
+## 3D Implementation
+
+- Use `useFrame` for animation loop
+- Store speed/pause/hover/focus state in a React context (SimContext)
+- Planet positions use elliptical orbit math: x = a·cos(t) - c, z = b·sin(t) where c = a·e, b = a·√(1-e²)
+- Each planet system is a nested group: rotation for inclination → group for orbital position → planet mesh + moon components
+- Orbit rings are dashed lines with invisible TubeGeometry for click targeting
+- Camera lerps from current position to a nearby vantage point on click; target snaps immediately
+- Bodies glow on hover using emissive color
+- Moons orbit around planet with TubeGeometry orbit rings (smaller scale)
+
+## Styling
+
+- Dark space theme (#0a0a1a background)
+- Responsive design (mobile-friendly)
+- Tech badge styling for About page
+- Navigation bar with brand name on left, nav links on right, subtle "(made with Opencode — big-pickle)" label
+- Card-based layouts with hover effects, backdrop blur
+
+## Build & Verify
+
+- Run `npm run dev` to start
+- Run `npm run build` to verify zero TypeScript and Vite errors
+- Keep chunk size >500 kB warning (expected with Three.js)
