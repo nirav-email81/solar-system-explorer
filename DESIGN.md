@@ -29,6 +29,8 @@ solar-system/
 ├── DESIGN.md                      # This document
 ├── SETUP.md                       # Setup instructions
 ├── prompt.txt                     # AI replication prompt
+├── README.md                      # Project overview
+├── .gitignore                     # Git ignore rules
 ├── public/                        # Static assets
 └── src/
     ├── main.tsx                   # App entry point
@@ -38,10 +40,11 @@ solar-system/
     ├── types/
     │   └── index.ts               # CelestialBody type definition
     ├── data/
-    │   └── solarSystemData.ts     # Complete solar system dataset (27 bodies)
+    │   └── solarSystemData.ts     # Complete solar system dataset (29 entries)
     ├── pages/
     │   ├── Home.tsx               # Landing page with search + categories
     │   ├── SolarSystemView.tsx    # 3D view page wrapper
+    │   ├── SolarSystemFacts.tsx   # Solar System fact sheet page
     │   ├── CelestialBodyPage.tsx  # Detail page for any body
     │   └── About.tsx              # About / credits page
     └── components/
@@ -75,6 +78,14 @@ App
     │       │   ├── CameraController
     │       │   └── OrbitControls
     │       └── SimControls (speed/pause/reset UI)
+    ├── /facts → SolarSystemFacts
+    │   ├── Overview (age, location, counts, galactic year)
+    │   ├── Size & Scale
+    │   ├── Orbital & Physical Extremes
+    │   ├── Heliosphere & Solar Activity
+    │   ├── Exploration Milestones
+    │   ├── Quick Facts
+    │   └── Galactic Orbit & the Galactic Year
     ├── /body/:id → CelestialBodyPage
     │   ├── Physical Characteristics
     │   ├── Orbital Characteristics
@@ -84,6 +95,10 @@ App
     │   ├── Highlights & Facts
     │   └── Moons list (if applicable)
     └── /about → About
+        ├── Mission & Included Bodies
+        ├── Key Science Topics
+        ├── Reference Links
+        └── Tech Stack
 ```
 
 ## Data Model
@@ -184,6 +199,7 @@ Scene
 |------|-----------|-------------|
 | `/` | Home | Hero, search, planet grid, categories |
 | `/solar-system-3d` | SolarSystemView | 3D interactive scene |
+| `/facts` | SolarSystemFacts | Solar System fact sheet |
 | `/body/:id` | CelestialBodyPage | Detailed info page |
 | `/about` | About | Project info + references |
 

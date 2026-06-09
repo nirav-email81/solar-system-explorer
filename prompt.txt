@@ -20,21 +20,31 @@ Build an interactive Solar System Explorer web app. Use Node.js with TypeScript,
    - Physical characteristics table (diameter, mass, gravity, escape velocity, temperature, day length)
    - Orbital characteristics table (distance from Sun, orbital period, eccentricity, inclination, orbital speed)
    - Composition section
-   - Atmosphere with horizontal percentage bars
+   - Atmosphere with horizontal percentage bars (including Sun's atmosphere: photosphere, chromosphere, corona)
    - Exploration missions with agency, year, description
    - Highlights and interesting facts
    - List of moons (if applicable)
+   - Van Allen radiation belts for Earth, solar atmosphere layers for the Sun
 
-4. **About page** (`/about`):
+4. **Fact Sheet page** (`/facts`):
+   - Overview: age (4.568 Byr), location (Orion Arm), counts (8 planets, 293+ moons, 1.3M+ asteroids), galactic year
+   - Size & Scale: heliosphere (120 AU), Oort Cloud (100,000 AU), mass distribution, extremes
+   - Orbital & Physical Extremes: fastest/slowest orbit, most circular/elliptical, fastest/slowest rotation, strongest/weakest gravity, most moons
+   - Heliosphere & Solar Activity: solar wind speed (300-800 km/s), sunspot cycle, flare classes
+   - Exploration Milestones: Sputnik, Apollo 11, Voyager, Parker Solar Probe
+   - Galactic Orbit & the Galactic Year: orbital speed (828,000 km/h), 230 Myr per orbit, 18-20 orbits completed, vertical oscillation (64 Myr), extinction hypothesis
+
+5. **About page** (`/about`):
    - Mission description
-   - What's included (all body types)
-   - Reference links to NASA, ESA, JPL, specific missions
+   - What's included (all body types plus fact sheet)
+   - Key science topics: solar atmosphere, solar flares/storms, solar wind/heliosphere, Van Allen belts, Venus super-rotation, galactic orbit, Lagrange points
+   - Reference links to NASA, ESA, JPL, Parker Solar Probe, Solar Orbiter, Van Allen Probes, Lucy, Juno, Cassini, New Horizons, JWST, Voyager
    - Tech stack badges
 
 ## Data Requirements
 
-Include 27+ celestial bodies with detailed physical and orbital data:
-- Sun (type: star)
+Include 29+ celestial bodies/entries with detailed physical and orbital data:
+- Sun (type: star) — with atmosphere field for solar atmosphere layers
 - 8 planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
 - Earth's Moon
 - 5 major moons: Io, Europa, Ganymede, Callisto (Jupiter), Titan (Saturn), Enceladus (Saturn), Triton (Neptune), Charon (Pluto)
@@ -42,7 +52,17 @@ Include 27+ celestial bodies with detailed physical and orbital data:
 - Belts: Asteroid Belt, Kuiper Belt, Oort Cloud, Trojan Asteroids
 - Other: Lagrange Points
 
-Each body needs: id, name, type, parentId, description, physicalCharacteristics (diameter_km, mass_kg, surfaceGravity_m_s2, escapeVelocity_km_s, meanTemperature_C, axialTilt_degrees, dayLength), orbitalCharacteristics (distanceFromSun_au, orbitalPeriod_years, orbitalPeriod_days, eccentricity, inclination_degrees, orbitalSpeed_km_s), atmosphere (composition array with element/percentage + description), composition, moons list, exploration (missions array + highlights), interestingFacts[], color, radius.
+Each body needs: id, name, type, parentId, description, physicalCharacteristics (diameter_km, mass_kg, surfaceGravity_m_s2, escapeVelocity_km_s, meanTemperature_C, axialTilt_degrees, dayLength), orbitalCharacteristics (distanceFromSun_au, orbitalPeriod_years, orbitalPeriod_days, eccentricity, inclination_degrees, orbitalSpeed_km_s), atmosphere (composition array with element/percentage + description — include for Sun too with H/He composition and layer descriptions), composition, moons list, exploration (missions array + highlights), interestingFacts[], color, radius.
+
+Key science details to include:
+- Solar atmosphere: photosphere (5,500°C), chromosphere (20,000°C), corona (1-3 million °C), coronal heating problem
+- Solar flares: A/B/C/M/X classification, energy release equivalent to billions of H-bombs
+- Solar wind: 300-800 km/s, creates heliosphere and aurorae
+- Solar storms/CMEs: billions of tons of plasma at up to 3,000 km/s, Carrington Event 1859
+- Van Allen belts: inner belt (1,000-6,000 km, high-energy protons), outer belt (13,000-60,000 km, electrons), discovered 1958, South Atlantic Anomaly
+- Venus super-rotation: 360 km/h winds, complete rotation in 4 Earth days, 60x faster than planet rotation
+- Trojan Asteroids: 10,000+ around Jupiter's L4/L5, Lucy mission
+- Lagrange Points: L1-L5, JWST at L2, DSCOVR at L1, Lunar Gateway
 
 ## 3D Implementation
 
@@ -60,11 +80,18 @@ Each body needs: id, name, type, parentId, description, physicalCharacteristics 
 - Dark space theme (#0a0a1a background)
 - Responsive design (mobile-friendly)
 - Tech badge styling for About page
-- Navigation bar with brand name on left, nav links on right, subtle "(made with Opencode — big-pickle)" label
+- Navigation bar with brand name on left, nav links (Home, 3D View, Facts, About), subtle "(made with Opencode — big-pickle)" label
 - Card-based layouts with hover effects, backdrop blur
+- Fact sheet table with accent-colored labels, right-aligned values, subtle row borders
 
 ## Build & Verify
 
 - Run `npm run dev` to start
 - Run `npm run build` to verify zero TypeScript and Vite errors
 - Keep chunk size >500 kB warning (expected with Three.js)
+
+## Repository
+
+- GitHub: https://github.com/nirav-email81/solar-system-explorer
+- Clone: git clone https://github.com/nirav-email81/solar-system-explorer.git
+- Setup: npm install && npm run dev
