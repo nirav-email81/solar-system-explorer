@@ -6,7 +6,7 @@ export const solarSystemData: CelestialBody[] = [
     name: 'The Sun',
     type: 'star',
     description:
-      'The Sun is the star at the center of our Solar System. It is a nearly perfect sphere of hot plasma, heated to incandescence by nuclear fusion reactions in its core. It provides the energy that sustains all life on Earth and drives our planet\'s climate and weather.',
+      'The Sun is the star at the center of our Solar System. It is a nearly perfect sphere of hot plasma, heated to incandescence by nuclear fusion reactions in its core. It provides the energy that sustains all life on Earth and drives our planet\'s climate and weather. The Sun\'s dynamic magnetic field drives powerful solar flares, coronal mass ejections (solar storms), and a constant outflow of charged particles called the solar wind, shaping the entire heliosphere.',
     physicalCharacteristics: {
       diameter_km: 1392700,
       mass_kg: '1.989 × 10³⁰',
@@ -30,15 +30,18 @@ export const solarSystemData: CelestialBody[] = [
     },
     exploration: {
       missions: [
-        { name: 'Parker Solar Probe', year: '2018', agency: 'NASA', description: 'First spacecraft to "touch" the Sun, flying through the corona.' },
-        { name: 'Solar Orbiter', year: '2020', agency: 'ESA/NASA', description: 'Studying the Sun\'s poles and solar wind.' },
-        { name: 'SOHO', year: '1995', agency: 'ESA/NASA', description: 'Solar and Heliospheric Observatory, monitoring solar activity.' },
-        { name: 'Solar Dynamics Observatory', year: '2010', agency: 'NASA', description: 'Studying solar variability and its effects on Earth.' },
+        { name: 'Parker Solar Probe', year: '2018', agency: 'NASA', description: 'First spacecraft to "touch" the Sun, flying through the corona to study solar wind and solar storms up close.' },
+        { name: 'Solar Orbiter', year: '2020', agency: 'ESA/NASA', description: 'Studying the Sun\'s poles, solar wind, and solar flare activity.' },
+        { name: 'SOHO', year: '1995', agency: 'ESA/NASA', description: 'Solar and Heliospheric Observatory, monitoring solar activity including flares and CMEs 24/7.' },
+        { name: 'Solar Dynamics Observatory', year: '2010', agency: 'NASA', description: 'Studying solar variability, magnetic fields, and flare eruptions.' },
       ],
       highlights: [
         'The Sun contains 99.86% of all mass in the Solar System.',
         'It takes about 8 minutes and 20 seconds for light to travel from the Sun to Earth.',
         'The Sun\'s magnetic field creates sunspots, solar flares, and coronal mass ejections.',
+        'Solar flares can release energy equivalent to billions of hydrogen bombs in minutes.',
+        'The solar wind streams outward at 300-800 km/s, creating the heliosphere that shields us from cosmic rays.',
+        'Major solar storms can disrupt satellites, power grids, and communications on Earth.',
       ],
     },
     interestingFacts: [
@@ -46,6 +49,10 @@ export const solarSystemData: CelestialBody[] = [
       'A million Earths could fit inside the Sun.',
       'The Sun\'s core generates energy equivalent to 100 billion hydrogen bombs per second.',
       'The solar wind streams outward at speeds of 300-800 km/s, forming a "bubble" called the heliosphere.',
+      'Solar flares are classified A, B, C, M, X by strength — X-class are the most powerful and can trigger radio blackouts on Earth.',
+      'Coronal mass ejections (CMEs) hurl billions of tons of plasma into space at speeds up to 3,000 km/s.',
+      'The Carrington Event of 1859 was the most powerful solar storm in recorded history, causing telegraph systems to fail worldwide.',
+      'The solar wind creates aurorae (Northern and Southern Lights) when charged particles interact with Earth\'s magnetic field.',
     ],
     color: '#FDB813',
     radius: 20,
@@ -114,7 +121,7 @@ export const solarSystemData: CelestialBody[] = [
     name: 'Venus',
     type: 'planet',
     description:
-      'Venus is the second planet from the Sun and the hottest in our Solar System. Often called Earth\'s "sister planet" due to similar size and mass, it has a thick toxic atmosphere that creates a runaway greenhouse effect, making its surface hot enough to melt lead.',
+      'Venus is the second planet from the Sun and the hottest in our Solar System. Often called Earth\'s "sister planet" due to similar size and mass, it has a thick toxic atmosphere that creates a runaway greenhouse effect, making its surface hot enough to melt lead. Venus\'s atmosphere exhibits a phenomenon called super-rotation, where winds whip around the planet at speeds up to 360 km/h (224 mph), completing a full rotation in just 4 Earth days — far faster than the planet itself rotates.',
     physicalCharacteristics: {
       diameter_km: 12104,
       mass_kg: '4.867 × 10²⁴',
@@ -139,7 +146,7 @@ export const solarSystemData: CelestialBody[] = [
         { element: 'Sulfur Dioxide', percentage: '0.015%' },
       ],
       description:
-        'Venus has the thickest atmosphere of any terrestrial planet, composed mainly of CO₂ with clouds of sulfuric acid. Atmospheric pressure at the surface is 92 times that of Earth.',
+        'Venus has the thickest atmosphere of any terrestrial planet, composed mainly of CO₂ with clouds of sulfuric acid. Atmospheric pressure at the surface is 92 times that of Earth. The atmosphere super-rotates, circling the planet every 4 Earth days with wind speeds reaching 360 km/h (224 mph) at the cloud tops, despite the planet\'s slow 243-day rotation.',
     },
     composition: {
       type: 'Terrestrial (rocky)',
@@ -157,12 +164,15 @@ export const solarSystemData: CelestialBody[] = [
         'Venus rotates in the opposite direction to most planets (retrograde rotation).',
         'A day on Venus (243 Earth days) is longer than its year (225 Earth days).',
         'Venus has no moons and no rings.',
+        'Venus\'s atmosphere super-rotates, with winds reaching 360 km/h at the cloud tops.',
       ],
     },
     interestingFacts: [
       'Venus is the brightest natural object in Earth\'s night sky after the Moon.',
       'The surface pressure is equivalent to being 900 meters under Earth\'s oceans.',
       'Venus has over 1,600 major volcanoes, more than any other planet.',
+      'Cloud-top winds reach 360 km/h, circling Venus every 4 Earth days — 60x faster than the planet\'s rotation.',
+      'Venus\'s super-rotation remains a mystery: the entire atmosphere moves far faster than the solid planet.',
       'The ancient Romans named Venus after their goddess of love and beauty.',
     ],
     color: '#E8B87C',
