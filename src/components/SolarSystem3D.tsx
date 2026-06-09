@@ -6,6 +6,16 @@ import { CelestialBody } from '../types';
 import { solarSystemData } from '../data/solarSystemData';
 import { useNavigate } from 'react-router-dom';
 
+const DEG60 = Math.PI / 3;
+const LAGRANGE_COLORS: Record<string, string> = {
+  'l4-earth': '#22d3ee',
+  'l5-earth': '#2dd4bf',
+  'l1-earth': '#818cf8',
+  'l2-earth': '#a78bfa',
+  'l4-jupiter': '#34d399',
+  'l5-jupiter': '#10b981',
+};
+
 interface SimState {
   speed: number;
   paused: boolean;
@@ -208,6 +218,81 @@ function PlanetSystem({ planet, moons, scale }: {
   );
 }
 
+function LagrangePoints3D({ parentPlanet, planetPos, planetAU }: {
+  parentPlanet: CelestialBody;
+  planetPos: THREE.Vector3;
+  planetAU: number;
+}) {
+  const { hoveredId, setHoveredId, focusId, onBodyClick } = useContext(SimContext);
+  const navigate = useNavigate();
+
+  const points = useMemo(() => {
+    const dist = planetPos.length();
+    if (dist < 0.01) return [];
+
+    const dir = planetPos.clone().normalize();
+    const points: { id: string; label: string; pos: THREE.Vector3 }[] = [];
+
+    if (parentPlanet.id === 'earth') {
+      const l1Fraction = 1 - 0.008 * (1 / planetAU);
+      const l2Fraction = 1 + 0.008 * (1 / planetAU);
+      points.push({ id: 'l1-earth', label: 'L1', pos: dir.clone().multiplyScalar(dist * l1Fraction) });
+      points.push({ id: 'l2-earth', label: 'L2', pos: dir.clone().multiplyScalar(dist * l2Fraction) });
+    }
+
+    const l4Angle = new THREE.Euler(0, DEG60, 0);
+    const l5Angle = new THREE.Euler(0, -DEG60, 0);
+    const l4Pos = planetPos.clone().applyEuler(l4Angle);
+    const l5Pos = planetPos.clone().applyEuler(l5Angle);
+
+    points.push({ id: `l4-${parentPlanet.id}`, label: 'L4', pos: l4Pos });
+    points.push({ id: `l5-${parentPlanet.id}`, label: 'L5', pos: l5Pos });
+
+    return points;
+  }, [planetPos, parentPlanet.id, planetAU]);
+
+  return (
+    <group>
+      {points.map(pt => {
+        const isHovered = hoveredId === pt.id;
+        const isFocused = focusId === `lagrange-points`;
+        const color = new THREE.Color(LAGRANGE_COLORS[pt.id] || '#5A7A9A');
+        const scale = isHovered ? 1.5 : 1;
+        return (
+          <mesh
+            key={pt.id}
+            position={pt.pos}
+            onClick={() => navigate('/body/lagrange-points')}
+            onPointerOver={() => setHoveredId(pt.id)}
+            onPointerOut={() => setHoveredId(null)}
+          >
+            <sphereGeometry args={[0.12 * scale, 16, 16]} />
+            <meshStandardMaterial
+              color={color}
+              emissive={color}
+              emissiveIntensity={isHovered || isFocused ? 0.8 : 0.4}
+            />
+            <Text
+              position={[0, 0.25, 0]}
+              fontSize={0.15}
+              color="#cccccc"
+              anchorX="center"
+              anchorY="bottom"
+            >
+              {pt.label}
+            </Text>
+            {isHovered && (
+              <Html position={[0, -0.3, 0]} center style={{ pointerEvents: 'none' }}>
+                <div className="orbit-label">{pt.label} · {parentPlanet.name}</div>
+              </Html>
+            )}
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
 function SunMesh() {
   const ref = useRef<THREE.Mesh>(null!);
   const { speed, paused, positions, hoveredId, setHoveredId, focusId, onBodyClick } = useContext(SimContext);
@@ -338,6 +423,31 @@ function OrbitRing({ body, scale }: { body: CelestialBody; scale: number }) {
   );
 }
 
+function SceneLagrangePoints({ planets, scale }: { planets: CelestialBody[]; scale: number }) {
+  const { positions } = useContext(SimContext);
+  const targets = ['earth', 'jupiter'];
+
+  return (
+    <>
+      {targets.map(targetId => {
+        const planet = planets.find(p => p.id === targetId);
+        if (!planet) return null;
+        const pos = positions.current.get(targetId);
+        if (!pos) return null;
+        const au = planet.orbitalCharacteristics.distanceFromSun_au || 1;
+        return (
+          <LagrangePoints3D
+            key={`lagrange-${targetId}`}
+            parentPlanet={planet}
+            planetPos={pos}
+            planetAU={au}
+          />
+        );
+      })}
+    </>
+  );
+}
+
 function CameraController() {
   const { camera, controls } = useThree();
   const { focusId, positions } = useContext(SimContext);
@@ -437,6 +547,7 @@ export default function SolarSystem3D() {
           {belts.map(b => (
             <BeltMesh key={b.id} body={b} scale={scale} />
           ))}
+          <SceneLagrangePoints planets={planets} scale={scale} />
 
           <CameraController />
           <OrbitControls enablePan={true} enableZoom={true} minDistance={1} maxDistance={150} />
