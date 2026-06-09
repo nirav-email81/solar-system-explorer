@@ -10,7 +10,9 @@ export default function SolarSystemFacts() {
             <tbody>
               <tr><td>Age</td><td>4.568 billion years</td></tr>
               <tr><td>Location</td><td>Orion Arm, Milky Way Galaxy</td></tr>
-              <tr><td>Distance from Galactic Center</td><td>~27,000 light-years</td></tr>
+              <tr><td>Distance from Galactic Center</td><td>~26,000–27,000 light-years</td></tr>
+              <tr><td>Galactic Year (Cosmic Year)</td><td>~225–250 million Earth years</td></tr>
+              <tr><td>Orbits of Galaxy Completed</td><td>~18–20 (since the Solar System formed)</td></tr>
               <tr><td>Number of Stars</td><td>1 (the Sun)</td></tr>
               <tr><td>Number of Planets</td><td>8</td></tr>
               <tr><td>Number of Dwarf Planets</td><td>5 recognised (Pluto, Ceres, Eris, Makemake, Haumea) — 100+ candidates</td></tr>
@@ -103,9 +105,46 @@ export default function SolarSystemFacts() {
             <li>Trojan asteroids share orbits with planets, with Jupiter hosting over 10,000 known Trojans at its L4 and L5 Lagrange points.</li>
             <li>The heliopause marks the boundary where the solar wind meets interstellar space — Voyager 1 crossed it in 2012.</li>
             <li>Every planet except Mercury and Venus has at least one natural satellite.</li>
-            <li>The Solar System orbits the Milky Way at about 828,000 km/h, completing one orbit every 230 million years.</li>
           </ul>
         </section>
+
+        <section className="about-section">
+          <h2>Galactic Orbit &amp; the Galactic Year</h2>
+
+          <p>
+            The Solar System does not sit still — it orbits the center of the Milky Way galaxy at
+            an extraordinary speed of about 828,000 km/h (230 km/s). One complete orbit around the
+            galactic center is called a <strong>galactic year</strong> (or cosmic year), lasting
+            approximately <strong>225–250 million Earth years</strong>.
+          </p>
+
+          <p>
+            To put this in perspective: the Solar System was born about 4.57 billion years ago,
+            meaning it has completed roughly <strong>18–20 galactic orbits</strong> in its entire
+            history. The last galactic year began around the time dinosaurs roamed the Earth
+            (the Triassic Period). A single galactic year ago — 250 million years — all landmasses
+            were fused into the supercontinent Pangaea.
+          </p>
+
+          <table className="fact-sheet-table">
+            <tbody>
+              <tr><td>Orbital Speed (around the galaxy)</td><td>~828,000 km/h (~230 km/s)</td></tr>
+              <tr><td>Distance Travelled Per Day</td><td>~19.9 million km</td></tr>
+              <tr><td>Orbital Path</td><td>Nearly circular, slight vertical oscillation through the galactic plane</td></tr>
+              <tr><td>Vertical Oscillation Period</td><td>~64 million years (bobbing above and below the galactic plane)</td></tr>
+              <tr><td>Galactic Center Orbited</td><td>Supermassive black hole (Sagittarius A*)</td></tr>
+              <tr><td>Age of Solar System in Galactic Years</td><td>~18–20 galactic years</td></tr>
+              <tr><td>One Galactic Year in Human History</td><td>Predates dinosaurs — the Permian-Triassic extinction event (~252 Mya) occurred near the last completion</td></tr>
+            </tbody>
+          </table>
+
+          <p style={{ marginTop: '1rem' }}>
+            The Solar System's vertical oscillation carries it above and below the galactic midplane
+            every ~64 million years. Some scientists hypothesize that this oscillation correlates
+            with extinction events, as passing through denser galactic regions may disturb the
+            Oort Cloud and increase comet impacts — though this remains debated.
+          </p>
+          </section>
       </div>
     </div>
   );
