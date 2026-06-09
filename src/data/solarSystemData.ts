@@ -28,6 +28,16 @@ export const solarSystemData: CelestialBody[] = [
       details:
         'The Sun is composed primarily of hydrogen (about 73% by mass) and helium (about 25%), with trace amounts of heavier elements including oxygen, carbon, neon, and iron.',
     },
+    atmosphere: {
+      composition: [
+        { element: 'Hydrogen', percentage: '73%' },
+        { element: 'Helium', percentage: '25%' },
+        { element: 'Oxygen', percentage: '0.8%' },
+        { element: 'Carbon', percentage: '0.3%' },
+      ],
+      description:
+        'The solar atmosphere consists of distinct layers. The photosphere (5,500°C) is the visible surface. Above it lies the chromosphere (up to 20,000°C), a thin transition region, and finally the corona (1–3 million °C) — the Sun\'s outer atmosphere that extends millions of kilometres into space. The corona is paradoxically hundreds of times hotter than the surface, a mystery known as the coronal heating problem. The corona is visible from Earth during a total solar eclipse.',
+    },
     exploration: {
       missions: [
         { name: 'Parker Solar Probe', year: '2018', agency: 'NASA', description: 'First spacecraft to "touch" the Sun, flying through the corona to study solar wind and solar storms up close.' },
@@ -53,6 +63,8 @@ export const solarSystemData: CelestialBody[] = [
       'Coronal mass ejections (CMEs) hurl billions of tons of plasma into space at speeds up to 3,000 km/s.',
       'The Carrington Event of 1859 was the most powerful solar storm in recorded history, causing telegraph systems to fail worldwide.',
       'The solar wind creates aurorae (Northern and Southern Lights) when charged particles interact with Earth\'s magnetic field.',
+      'The corona (the Sun\'s outer atmosphere) reaches 1–3 million °C, far hotter than the visible surface at 5,500°C.',
+      'The Parker Solar Probe has flown through the corona, sampling particles and magnetic fields in the Sun\'s upper atmosphere.',
     ],
     color: '#FDB813',
     radius: 20,
@@ -183,7 +195,7 @@ export const solarSystemData: CelestialBody[] = [
     name: 'Earth',
     type: 'planet',
     description:
-      'Earth is the third planet from the Sun and the only known world to harbor life. Its unique combination of liquid water, a protective magnetic field, and a nitrogen-oxygen atmosphere has allowed life to thrive for over 3.5 billion years.',
+      'Earth is the third planet from the Sun and the only known world to harbor life. Its unique combination of liquid water, a protective magnetic field, and a nitrogen-oxygen atmosphere has allowed life to thrive for over 3.5 billion years. Earth\'s magnetic field traps charged particles from the solar wind in two doughnut-shaped regions called the Van Allen radiation belts, which protect the surface from harmful cosmic radiation.',
     physicalCharacteristics: {
       diameter_km: 12756,
       mass_kg: '5.972 × 10²⁴',
@@ -209,7 +221,7 @@ export const solarSystemData: CelestialBody[] = [
         { element: 'Carbon Dioxide', percentage: '0.04%' },
       ],
       description:
-        'Earth\'s atmosphere is a complex layer of gases that protects life from harmful solar radiation, moderates climate, and provides the air we breathe.',
+        'Earth\'s atmosphere is a complex layer of gases that protects life from harmful solar radiation, moderates climate, and provides the air we breathe. Beyond the atmosphere, Earth\'s magnetic field creates the Van Allen radiation belts — two concentric doughnut-shaped regions of charged particles trapped by the magnetosphere. The inner belt (1,000–6,000 km altitude) contains high-energy protons, while the outer belt (13,000–60,000 km) contains mostly electrons. Discovered by James Van Allen in 1958, these belts pose radiation hazards to satellites and astronauts but shield Earth\'s surface from the solar wind.',
     },
     composition: {
       type: 'Terrestrial (rocky)',
@@ -228,12 +240,15 @@ export const solarSystemData: CelestialBody[] = [
         'Earth is the largest and most massive of the four terrestrial planets.',
         'The Moon is Earth\'s only natural satellite, stabilising its axial tilt.',
         'About 71% of Earth\'s surface is covered in liquid water.',
+        'The Van Allen radiation belts protect Earth from solar wind but pose hazards for satellites and astronauts.',
       ],
     },
     interestingFacts: [
       'Earth is the only planet not named after a Greek or Roman god.',
       'The atmosphere extends to about 10,000 km above the surface.',
-      'Earth\'s magnetic field protects life from solar wind and cosmic radiation.',
+      'Earth\'s magnetic field creates the Van Allen radiation belts, discovered in 1958 by James Van Allen.',
+      'The Van Allen belts trap solar wind particles; the inner belt holds high-energy protons, the outer belt holds electrons.',
+      'The South Atlantic Anomaly is a dip in the inner Van Allen belt where radiation levels are higher, affecting satellites.',
       'The deepest point on Earth is the Mariana Trench, 11,034 meters deep.',
     ],
     color: '#4B9CD3',
