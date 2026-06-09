@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import SolarSystemView from './pages/SolarSystemView';
 import CelestialBodyPage from './pages/CelestialBodyPage';
 import About from './pages/About';
+import SolarSystemFacts from './pages/SolarSystemFacts';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/solar-system-3d" element={<SolarSystemView />} />
           <Route path="/body/:id" element={<CelestialBodyPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/facts" element={<SolarSystemFacts />} />
         </Routes>
       </main>
     </div>

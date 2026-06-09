@@ -783,6 +783,38 @@ body {
   text-decoration: underline;
 }
 
+/* Fact Sheet */
+.fact-sheet-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.fact-sheet-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fact-sheet-table tr:last-child {
+  border-bottom: none;
+}
+
+.fact-sheet-table td {
+  padding: 0.55rem 0.5rem;
+  color: var(--text-muted);
+  vertical-align: top;
+}
+
+.fact-sheet-table td:first-child {
+  font-weight: 600;
+  color: var(--accent);
+  width: 40%;
+  padding-left: 0;
+}
+
+.fact-sheet-table td:last-child {
+  text-align: right;
+}
+
 /* 404 */
 .not-found {
   text-align: center;

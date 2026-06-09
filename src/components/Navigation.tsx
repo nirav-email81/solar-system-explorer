@@ -22,6 +22,12 @@ export default function Navigation() {
             3D View
           </Link>
           <Link
+            to="/facts"
+            className={`nav-link ${isActive('/facts') ? 'active' : ''}`}
+          >
+            Facts
+          </Link>
+          <Link
             to="/about"
             className={`nav-link ${isActive('/about') ? 'active' : ''}`}
           >
