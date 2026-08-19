@@ -24,7 +24,7 @@ export default async (req: Request): Promise<Response> => {
           { role: 'user', content: prompt },
         ],
         temperature: 0.3,
-        max_tokens: 800,
+        max_tokens: 2048,
       }),
     });
 
@@ -41,8 +41,15 @@ export default async (req: Request): Promise<Response> => {
 
     // Extract thinking and clean answer separately
     const thinkingMatch = raw.match(/<think>([\s\S]*?)<\/think>/);
-    const thinking = thinkingMatch ? thinkingMatch[1].trim() : '';
-    const answer = raw.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();
+    let thinking = thinkingMatch ? thinkingMatch[1].trim() : '';
+    let answer = raw.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();
+
+    // Handle unclosed think tags (truncated by max_tokens)
+    if (!thinking && raw.includes('<think>')) {
+      const parts = raw.split('<think>');
+      thinking = parts[1] ? parts[1].trim() : '';
+      answer = parts[0].trim();
+    }
 
     return new Response(JSON.stringify({ answer, thinking }), {
       status: 200,
