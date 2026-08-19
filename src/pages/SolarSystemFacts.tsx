@@ -144,7 +144,165 @@ export default function SolarSystemFacts() {
             with extinction events, as passing through denser galactic regions may disturb the
             Oort Cloud and increase comet impacts — though this remains debated.
           </p>
-          </section>
+        </section>
+
+        <section className="about-section">
+          <h2>Orbital Direction Sync</h2>
+
+          <p>
+            All eight planets orbit the Sun in the <strong>same direction</strong> — counter-clockwise
+            as viewed from above Earth's north pole. This is not a coincidence. When the Solar System
+            formed ~4.57 billion years ago, a massive cloud of gas and dust collapsed under its own
+            gravity. As it contracted, it spun faster (conservation of angular momentum) and flattened
+            into a <strong>protoplanetary disk</strong>. All the planets condensed from this rotating
+            disk, inheriting its direction of spin.
+          </p>
+
+          <p>
+            The Sun itself also rotates in the same prograde direction, though at different speeds
+            at different latitudes — the equator rotates once every ~25 days, while the poles take
+            ~35 days. This differential rotation is a signature of the original disk's angular
+            momentum being shared between the Sun and the planets.
+          </p>
+
+          <table className="fact-sheet-table">
+            <tbody>
+              <tr><td>Orbital Direction (all 8 planets)</td><td>Prograde (counter-clockwise from north)</td></tr>
+              <tr><td>Solar System Formation</td><td>~4.57 billion years ago from collapsing molecular cloud</td></tr>
+              <tr><td>Reason for Flat Plane</td><td>Conservation of angular momentum — spinning cloud flattened into a disk</td></tr>
+              <tr><td>Planet Orbital Inclinations</td><td>All within ~7° of the ecliptic (Mercury highest at 7.0°)</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className="about-section">
+          <h2>Rotational Direction Sync</h2>
+
+          <p>
+            Most planets also <strong>rotate</strong> in the same prograde direction as their orbit.
+            This is again inherited from the original protoplanetary disk's angular momentum. However,
+            there are two notable exceptions:
+          </p>
+
+          <ul>
+            <li><strong>Venus</strong> — rotates <em>retrograde</em> (backwards, clockwise from north).
+            Its rotation period (243 Earth days) is longer than its orbital period (225 days). The cause
+            is likely a combination of a massive ancient impact that reversed its spin, and long-term
+            tidal interactions with the Sun and its thick atmosphere that gradually slowed and flipped
+            its rotation.</li>
+            <li><strong>Uranus</strong> — tilted <em>98° on its side</em>, so it essentially rolls
+            along its orbit. Its rotational axis lies nearly in the ecliptic plane. A giant impact
+            early in its history is the leading explanation for this extreme tilt.</li>
+          </ul>
+
+          <table className="fact-sheet-table">
+            <tbody>
+              <tr><td>Prograde Rotators</td><td>Mercury, Earth, Mars, Jupiter, Saturn, Neptune</td></tr>
+              <tr><td>Retrograde Rotator</td><td>Venus (spins backwards, 243-day rotation)</td></tr>
+              <tr><td>Tilted on Side</td><td>Uranus (98° axial tilt — rolls along its orbit)</td></tr>
+              <tr><td>Fastest Spinner</td><td>Jupiter — one rotation every 9.9 hours</td></tr>
+              <tr><td>Slowest Spinner</td><td>Venus — one rotation every 243 Earth days</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className="about-section">
+          <h2>Planetary Orbital Speeds</h2>
+
+          <p>
+            Planets closer to the Sun orbit faster — a direct consequence of Kepler's laws and
+            gravitational physics. Mercury, the innermost planet, screams around the Sun at
+            <strong>47.4 km/s</strong> (170,000 km/h), while distant Neptune crawls at just
+            <strong>5.4 km/s</strong> (19,000 km/h) — nearly 9× slower.
+          </p>
+
+          <p>
+            Even Earth's speed varies throughout its orbit. Earth travels roughly <strong>1 km/s
+            faster in January</strong> (perihelion, when it's closest to the Sun at ~147.1 million km)
+            than it does in <strong>July</strong> (aphelion, when it's farthest at ~152.1 million km).
+            This is Kepler's second law in action — a planet sweeps out equal areas in equal times,
+            so it moves faster when closer to the Sun.
+          </p>
+
+          <table className="fact-sheet-table">
+            <tbody>
+              <tr><th>Planet</th><th>Orbital Speed (km/s)</th><th>Orbital Speed (km/h)</th></tr>
+              <tr><td>Mercury</td><td>47.4</td><td>~170,600</td></tr>
+              <tr><td>Venus</td><td>35.0</td><td>~126,000</td></tr>
+              <tr><td>Earth</td><td>29.8</td><td>~107,200</td></tr>
+              <tr><td>Mars</td><td>24.1</td><td>~86,800</td></tr>
+              <tr><td>Jupiter</td><td>13.1</td><td>~47,200</td></tr>
+              <tr><td>Saturn</td><td>9.7</td><td>~34,900</td></tr>
+              <tr><td>Uranus</td><td>6.8</td><td>~24,500</td></tr>
+              <tr><td>Neptune</td><td>5.4</td><td>~19,400</td></tr>
+            </tbody>
+          </table>
+
+          <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            Earth's perihelion speed: ~30.3 km/s (January) | Aphelion speed: ~29.3 km/s (July) — a ~1 km/s variance.
+          </p>
+        </section>
+
+        <section className="about-section">
+          <h2>Why Is It Hard to Go "Up"?</h2>
+
+          <p>
+            The Solar System is essentially flat — all planets orbit within ~7° of the
+            <strong>ecliptic plane</strong>. But what if you wanted to send a spacecraft
+            <em>perpendicular</em> to this plane, straight "up" or "down"? This is
+            <strong>exceptionally difficult and expensive</strong>, for several reasons:
+          </p>
+
+          <p>
+            <strong>1. You must cancel Earth's orbital velocity.</strong> Earth hurtles around the
+            Sun at <strong>~30 km/s</strong> in the ecliptic plane. To go perpendicular, a spacecraft
+            must first burn enough fuel to <em>cancel all of this sideways momentum</em>, then add
+            new velocity in the vertical direction. This is like trying to jump off a moving train
+            — you can't just leap sideways; you first need to stop your forward motion.
+          </p>
+
+          <p>
+            <strong>2. The fuel cost is staggering.</strong> The delta-v (change in velocity) required
+            for a plane change is given by the formula: <strong>Δv = 2v × sin(Δi/2)</strong>, where
+            v is orbital speed and Δi is the angle of change. At LEO speed (~7.8 km/s), a 90° plane
+            change costs <strong>~10.8 km/s</strong> — more than escaping Earth's gravity entirely
+            (11.2 km/s). The propellant mass needed grows exponentially with the Tsiolkovsky rocket
+            equation.
+          </p>
+
+          <p>
+            <strong>3. There's nothing interesting up there.</strong> All planets, moons, asteroids,
+            comets, and the vast majority of solar system objects lie within the ecliptic plane.
+            A probe sent straight up would find mostly empty interplanetary space.
+          </p>
+
+          <p>
+            <strong>4. Only one mission has done it.</strong> The <strong>Ulysses</strong> spacecraft
+            (1990) remains the only probe to achieve a near-polar solar orbit (~80° inclination).
+            It required the Space Shuttle, <em>three</em> upper-stage rockets (IUS + PAM-S), and a
+            Jupiter gravity assist — all just to achieve an out-of-plane trajectory. It could not
+            use solar panels at Jupiter's distance, so it was powered by a nuclear RTG.
+          </p>
+
+          <p>
+            Even the Voyager probes, which are leaving the solar system, only tilted partially out
+            of the plane: Voyager 1 at ~35° above, Voyager 2 at ~48° below — and they achieved
+            this passively through planetary gravity assists, not deliberate plane changes.
+          </p>
+
+          <table className="fact-sheet-table">
+            <tbody>
+              <tr><td>Earth's Orbital Velocity</td><td>~30 km/s (must be cancelled to go perpendicular)</td></tr>
+              <tr><td>90° Plane Change Δv at LEO</td><td>~10.8 km/s (exceeds Earth escape velocity of 11.2 km/s)</td></tr>
+              <tr><td>Delta-v Formula</td><td>Δv = 2v × sin(Δi/2)</td></tr>
+              <tr><td>Only Near-Polar Solar Mission</td><td>Ulysses (1990) — 80.2° inclination via Jupiter gravity assist</td></tr>
+              <tr><td>Ulysses Requirements</td><td>Space Shuttle + IUS + PAM-S upper stages + Jupiter flyby</td></tr>
+              <tr><td>Voyager 1 Tilt</td><td>~35° above ecliptic (passive, via gravity assists)</td></tr>
+              <tr><td>Voyager 2 Tilt</td><td>~48° below ecliptic (passive, via gravity assists)</td></tr>
+              <tr><td>Scientific Motivation</td><td>Low — all major objects lie in the ecliptic plane</td></tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     </div>
   );

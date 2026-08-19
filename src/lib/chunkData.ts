@@ -111,6 +111,30 @@ export function buildChunks(): Chunk[] {
     text: 'The Solar System orbits the Milky Way at about 828,000 km/h (230 km/s), traveling about 19.9 million km per day. One complete orbit (galactic year) takes approximately 225-250 million Earth years. The Solar System has completed about 18-20 galactic orbits since its formation. The orbit is nearly circular with a slight vertical oscillation through the galactic plane every ~64 million years. The galactic center orbited is the supermassive black hole Sagittarius A*. Some scientists hypothesize this vertical oscillation correlates with extinction events by disturbing the Oort Cloud.',
   });
 
+  chunks.push({
+    id: 'solarsystem-directions',
+    bodyId: 'solarsystem',
+    bodyName: 'Solar System',
+    category: 'Orbital & Rotational Direction',
+    text: 'All eight planets orbit the Sun in the same direction — counter-clockwise as viewed from above Earth\'s north pole (prograde). This is because the Solar System formed ~4.57 billion years ago from a collapsing molecular cloud that spun faster as it contracted (conservation of angular momentum) and flattened into a protoplanetary disk. All planets condensed from this rotating disk. Most planets also rotate prograde. Exceptions: Venus rotates retrograde (backwards) with a 243-day rotation period, likely caused by a massive ancient impact combined with tidal/atmospheric drag over billions of years. Uranus is tilted 98° on its side, rolling along its orbit — a giant impact is the leading explanation. The Sun rotates prograde too, with its equator completing one rotation every ~25 days and poles every ~35 days.',
+  });
+
+  chunks.push({
+    id: 'solarsystem-orbital-speeds',
+    bodyId: 'solarsystem',
+    bodyName: 'Solar System',
+    category: 'Orbital Speeds',
+    text: 'Planets closer to the Sun orbit faster (Kepler\'s laws). Mercury is fastest at 47.4 km/s (170,600 km/h), followed by Venus 35.0 km/s, Earth 29.8 km/s, Mars 24.1 km/s, Jupiter 13.1 km/s, Saturn 9.7 km/s, Uranus 6.8 km/s, and Neptune slowest at 5.4 km/s (19,400 km/h). Earth\'s speed varies by about 1 km/s throughout its orbit — faster in January (perihelion, ~147.1 million km from Sun) at ~30.3 km/s, slower in July (aphelion, ~152.1 million km) at ~29.3 km/s. This is Kepler\'s second law in action: a planet sweeps equal areas in equal times, moving faster when closer to the Sun.',
+  });
+
+  chunks.push({
+    id: 'solarsystem-out-of-plane',
+    bodyId: 'solarsystem',
+    bodyName: 'Solar System',
+    category: 'Going Out of Plane',
+    text: 'Going perpendicular to the ecliptic plane is exceptionally difficult and expensive. Earth moves at ~30 km/s in the ecliptic — to go up, you must first cancel all that sideways momentum. The delta-v formula for plane change is Δv = 2v × sin(Δi/2). A 90° plane change at LEO speed (~7.8 km/s) requires ~10.8 km/s — more than escaping Earth\'s gravity (11.2 km/s). Only one mission achieved near-polar solar orbit: Ulysses (1990, 80.2° inclination), which required the Space Shuttle, three upper-stage rockets (IUS + PAM-S), and a Jupiter gravity assist. Voyager 1 heads ~35° above the ecliptic and Voyager 2 ~48° below, but only passively via planetary gravity assists. There is little scientific motivation since all planets, moons, and interesting objects lie in the ecliptic plane.',
+  });
+
   return chunks;
 }
 
