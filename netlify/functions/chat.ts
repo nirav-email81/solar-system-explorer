@@ -18,7 +18,7 @@ export default async (req: Request): Promise<Response> => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
+        model: 'qwen/qwen3.6-27b',
         messages: [
           { role: 'system', content: 'You are a solar system expert. Be concise and accurate. Use bullet points when listing multiple items.' },
           { role: 'user', content: prompt },
