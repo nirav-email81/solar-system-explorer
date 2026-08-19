@@ -34,12 +34,14 @@ export default async (req: Request): Promise<Response> => {
     }
 
     const data = await response.json();
-    let answer = data.choices?.[0]?.message?.content || 'No answer generated.';
+    const raw = data.choices?.[0]?.message?.content || 'No answer generated.';
 
-    // Strip Qwen thinking tags
-    answer = answer.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();
+    // Extract thinking and clean answer separately
+    const thinkingMatch = raw.match(/<think>([\s\S]*?)<\/think>/);
+    const thinking = thinkingMatch ? thinkingMatch[1].trim() : '';
+    const answer = raw.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();
 
-    return new Response(JSON.stringify({ answer }), {
+    return new Response(JSON.stringify({ answer, thinking }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });

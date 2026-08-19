@@ -5,6 +5,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   sources?: string[];
+  thinking?: string;
 }
 
 const SUGGESTIONS = [
@@ -36,8 +37,8 @@ export default function ChatBot() {
     setLoading(true);
 
     try {
-      const { answer, sources } = await chat(query);
-      setMessages(prev => [...prev, { role: 'assistant', content: answer, sources }]);
+      const { answer, sources, thinking } = await chat(query);
+      setMessages(prev => [...prev, { role: 'assistant', content: answer, sources, thinking }]);
     } catch (err) {
       setMessages(prev => [...prev, { role: 'assistant', content: `Error: ${err}. Make sure GROQ_API_KEY is configured in Netlify.` }]);
     } finally {
@@ -66,6 +67,12 @@ export default function ChatBot() {
           <div key={i} className={`chat-message chat-message-${msg.role}`}>
             <div className="chat-bubble">
               <div className="chat-content">{msg.content}</div>
+              {msg.thinking && (
+                <details className="chat-thinking">
+                  <summary>Model thinking</summary>
+                  <div className="chat-thinking-content">{msg.thinking}</div>
+                </details>
+              )}
               {msg.sources && msg.sources.length > 0 && (
                 <div className="chat-sources">
                   Sources: {msg.sources.map(s => (

@@ -38,6 +38,7 @@ export function buildPrompt(query: string, context: RetrievedChunk[]): string {
 export interface ChatResponse {
   answer: string;
   sources: string[];
+  thinking: string;
 }
 
 export async function chat(query: string): Promise<ChatResponse> {
@@ -57,5 +58,5 @@ export async function chat(query: string): Promise<ChatResponse> {
   const data = await response.json();
   const sources = [...new Set(context.map(c => c.chunk.bodyName))];
 
-  return { answer: data.answer, sources };
+  return { answer: data.answer, sources, thinking: data.thinking || '' };
 }
