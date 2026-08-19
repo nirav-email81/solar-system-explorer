@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import TrafficMap from '../components/TrafficMap';
+
 export default function About() {
   return (
     <div className="page about-page">
@@ -11,6 +14,9 @@ export default function About() {
             our Solar System. From the Sun at its center to the distant Oort Cloud at its edge,
             we aim to make the wonders of space exploration accessible to everyone through an
             immersive 3D experience and detailed fact sheets.
+          </p>
+          <p className="about-creator">
+            Created by <a href="https://www.linkedin.com/in/niravchhaya/" target="_blank" rel="noopener noreferrer">Nirav Chhaya</a> &mdash; conceptualized, developed, and made available for public use.
           </p>
         </section>
 
@@ -44,6 +50,26 @@ export default function About() {
         </section>
 
         <section className="about-section">
+          <h2>AI-Powered Chat Assistant</h2>
+          <p>
+            The chat feature uses <strong>Retrieval-Augmented Generation (RAG)</strong> — a technique where
+            relevant knowledge is retrieved first, then fed to the AI for answer generation.
+          </p>
+          <ul>
+            <li><strong>Retrieval:</strong> Client-side TF-IDF (Term Frequency–Inverse Document Frequency) keyword matching runs entirely in the browser with zero external API calls. Tokenization, stop word removal, TF-IDF vectorization, and cosine similarity scoring select the top-3 most relevant knowledge chunks.</li>
+            <li><strong>Knowledge Base:</strong> ~120 curated text chunks extracted from 29 celestial bodies and solar system topics, covering physical stats, orbital data, atmosphere, exploration missions, and interesting facts.</li>
+            <li><strong>Generation:</strong> Groq API running <code>qwen/qwen3-27b</code> — a fast inference engine accessed via Netlify Functions (serverless).</li>
+            <li><strong>Thinking Extraction:</strong> The model's reasoning process (enclosed in <code>&lt;think&gt;</code> tags) is decoded from HTML entities, extracted, and displayed in a collapsible "Model thinking" UI element.</li>
+            <li><strong>Prompt Design:</strong> The system prompt instructs the model to use retrieved context as primary source, supplement with general scientific knowledge when needed, and cite which celestial body or topic the answer comes from.</li>
+            <li><strong>Conversation Threading:</strong> Previous messages are passed as context so the model can handle follow-up questions naturally.</li>
+          </ul>
+          <p className="about-creator">
+            The entire retrieval pipeline — TF-IDF engine, knowledge chunking system, RAG orchestration,
+            and Netlify serverless function — was built from scratch in vanilla TypeScript with no external retrieval dependencies.
+          </p>
+        </section>
+
+        <section className="about-section">
           <h2>Data Sources &amp; References</h2>
           <p>
             All data is sourced from NASA, ESA, and other space agencies' publicly available
@@ -68,17 +94,24 @@ export default function About() {
         </section>
 
         <section className="about-section">
+          <h2>Global Reach</h2>
+          <p>Visitor traffic by country — updated in real time.</p>
+          <TrafficMap />
+        </section>
+
+        <section className="about-section">
           <h2>Technology</h2>
           <p>
             Built with React, TypeScript, and Three.js (via React Three Fiber).
             The 3D visualization uses WebGL for an interactive exploration experience.
             Orbital mechanics are simulated using Keplerian orbital elements with
             elliptical paths, orbital inclination, and variable speed controls.
+            The AI chat uses a custom RAG pipeline with TF-IDF retrieval and Groq API generation.
           </p>
         </section>
 
         <section className="about-section tech-stack">
-          {['React', 'TypeScript', 'Three.js', 'React Three Fiber', 'React Three Drei', 'Vite', 'React Router', 'WebGL', 'Keplerian Orbit Simulation'].map(tech => (
+          {['React', 'TypeScript', 'Three.js', 'React Three Fiber', 'React Three Drei', 'Vite', 'React Router', 'WebGL', 'Keplerian Orbit Simulation', 'Groq', 'Netlify Functions', 'RAG', 'TF-IDF', 'React Markdown'].map(tech => (
             <span key={tech} className="tech-badge">{tech}</span>
           ))}
         </section>

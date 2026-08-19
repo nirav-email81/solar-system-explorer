@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { solarSystemData, categories } from '../data/solarSystemData';
 import PlanetCard from '../components/PlanetCard';
 import SearchBar from '../components/SearchBar';
+import VisitCounter from '../components/VisitCounter';
 
 export default function Home() {
   const planets = solarSystemData.filter(b => b.type === 'planet');
@@ -17,6 +18,7 @@ export default function Home() {
         <Link to="/solar-system-3d" className="hero-cta">
           Launch 3D Explorer
         </Link>
+        <VisitCounter />
       </section>
 
       <section className="section">

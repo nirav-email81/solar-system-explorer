@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect, FormEvent } from 'react';
-import { chat } from '../lib/rag';
+import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import { chat, ChatMessage } from '../lib/rag';
+import { solarSystemData } from '../data/solarSystemData';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -8,19 +11,43 @@ interface Message {
   thinking?: string;
 }
 
-const SUGGESTIONS = [
-  'Why does Venus spin backwards?',
-  'What is the Kuiper Belt?',
-  'How do Van Allen belts protect Earth?',
-  'What missions have visited Jupiter?',
-  'What are Lagrange points?',
-  'How hot is the Sun\'s corona?',
-];
+const SUGGESTION_CATEGORIES: Record<string, string[]> = {
+  'Planets': [
+    'Why does Venus spin backwards?',
+    'How hot is Mercury during the day?',
+    'What makes Neptune\'s winds so fast?',
+    'How does Mars\'s atmosphere compare to Earth\'s?',
+  ],
+  'Moons': [
+    'Could Europa have life?',
+    'Why is Titan\'s atmosphere so thick?',
+    'How big is Ganymede compared to Mercury?',
+    'What makes Enceladus\'s geysers special?',
+  ],
+  'Missions': [
+    'What missions have visited Jupiter?',
+    'When will we reach Pluto again?',
+    'What has Voyager 1 found in interstellar space?',
+    'What is the Lucy mission studying?',
+  ],
+  'Science': [
+    'What are Lagrange points?',
+    'How do Van Allen belts protect Earth?',
+    'What is the Kuiper Belt?',
+    'How hot is the Sun\'s corona?',
+  ],
+};
+
+const bodyNameToId = new Map(
+  solarSystemData.map(b => [b.name.toLowerCase(), b.id])
+);
 
 export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState('Planets');
   const messagesEnd = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,7 +64,11 @@ export default function ChatBot() {
     setLoading(true);
 
     try {
-      const { answer, sources, thinking } = await chat(query);
+      const history: ChatMessage[] = messages.map(m => ({
+        role: m.role,
+        content: m.content,
+      }));
+      const { answer, sources, thinking } = await chat(query, history);
       setMessages(prev => [...prev, { role: 'assistant', content: answer, sources, thinking }]);
     } catch (err) {
       setMessages(prev => [...prev, { role: 'assistant', content: `Error: ${err}. Make sure GROQ_API_KEY is configured in Netlify.` }]);
@@ -46,14 +77,35 @@ export default function ChatBot() {
     }
   }
 
+  async function handleCopy(text: string, idx: number) {
+    await navigator.clipboard.writeText(text);
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 2000);
+  }
+
+  function getSourceId(name: string): string | null {
+    return bodyNameToId.get(name.toLowerCase()) || null;
+  }
+
   return (
     <div className="chat-container">
       {messages.length === 0 && (
         <div className="chat-welcome">
           <h2>Ask the Solar System</h2>
           <p>Ask anything about the 27 celestial bodies in our knowledge base — planets, moons, dwarf planets, belts, and more.</p>
+          <div className="chat-category-tabs">
+            {Object.keys(SUGGESTION_CATEGORIES).map(cat => (
+              <button
+                key={cat}
+                className={`chat-category-tab ${activeCategory === cat ? 'active' : ''}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
           <div className="chat-suggestions">
-            {SUGGESTIONS.map(s => (
+            {SUGGESTION_CATEGORIES[activeCategory].map(s => (
               <button key={s} className="chat-suggestion" onClick={(e) => handleSend(e, s)}>
                 {s}
               </button>
@@ -66,7 +118,9 @@ export default function ChatBot() {
         {messages.map((msg, i) => (
           <div key={i} className={`chat-message chat-message-${msg.role}`}>
             <div className="chat-bubble">
-              <div className="chat-content">{msg.content}</div>
+              <div className="chat-content">
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              </div>
               {msg.thinking && (
                 <details className="chat-thinking">
                   <summary>Model thinking</summary>
@@ -75,10 +129,26 @@ export default function ChatBot() {
               )}
               {msg.sources && msg.sources.length > 0 && (
                 <div className="chat-sources">
-                  Sources: {msg.sources.map(s => (
-                    <span key={s} className="chat-source-badge">{s}</span>
-                  ))}
+                  Sources: {msg.sources.map(s => {
+                    const id = getSourceId(s);
+                    return id ? (
+                      <Link key={s} to={`/body/${id}`} className="chat-source-badge">
+                        {s}
+                      </Link>
+                    ) : (
+                      <span key={s} className="chat-source-badge">{s}</span>
+                    );
+                  })}
                 </div>
+              )}
+              {msg.role === 'assistant' && (
+                <button
+                  className="chat-copy-btn"
+                  onClick={() => handleCopy(msg.content, i)}
+                  title="Copy answer"
+                >
+                  {copiedIdx === i ? '\u2713' : '\u2398'}
+                </button>
               )}
             </div>
           </div>

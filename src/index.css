@@ -1088,3 +1088,238 @@ body {
 .chat-send:not(:disabled):hover {
   opacity: 0.85;
 }
+
+/* Visit Counter */
+.visit-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(106, 136, 255, 0.1);
+  border: 1px solid rgba(106, 136, 255, 0.2);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  width: fit-content;
+}
+
+.visit-counter-label {
+  color: var(--text-muted);
+}
+
+.visit-counter-number {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.visit-counter-location {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Traffic Map */
+.traffic-map {
+  margin-top: 1rem;
+}
+
+.traffic-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.traffic-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.traffic-flag {
+  font-size: 1.2rem;
+  width: 1.5rem;
+  text-align: center;
+}
+
+.traffic-name {
+  width: 120px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.traffic-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.traffic-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #8a6aff);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.traffic-count {
+  width: 50px;
+  text-align: right;
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.traffic-loading,
+.traffic-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+/* About Creator */
+.about-creator {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.about-creator a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.about-creator a:hover {
+  text-decoration: underline;
+}
+
+/* Chat Category Tabs */
+.chat-category-tabs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.chat-category-tab {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.35rem 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chat-category-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chat-category-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Chat Copy Button */
+.chat-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.chat-bubble {
+  position: relative;
+}
+
+.chat-message-assistant:hover .chat-copy-btn {
+  opacity: 1;
+}
+
+.chat-copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Chat Source Badge as Link */
+.chat-source-badge {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.chat-source-badge:hover {
+  text-decoration: underline;
+}
+
+/* Chat Markdown Content */
+.chat-content h1,
+.chat-content h2,
+.chat-content h3 {
+  margin: 0.5rem 0 0.3rem;
+  font-size: 1rem;
+}
+
+.chat-content p {
+  margin: 0.3rem 0;
+}
+
+.chat-content ul,
+.chat-content ol {
+  margin: 0.3rem 0;
+  padding-left: 1.2rem;
+}
+
+.chat-content li {
+  margin: 0.15rem 0;
+}
+
+.chat-content code {
+  background: rgba(106, 136, 255, 0.15);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.chat-content pre {
+  background: rgba(11, 13, 26, 0.6);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.4rem 0;
+}
+
+.chat-content pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.chat-content strong {
+  color: var(--accent);
+}
+
+.chat-content a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.chat-content a:hover {
+  text-decoration: underline;
+}

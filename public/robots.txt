@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://solarsystemexplorerwith3dview.netlify.app/sitemap.xml

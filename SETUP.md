@@ -40,7 +40,7 @@ Inside the project folder, run:
 npm install
 ```
 
-This downloads all required packages (React, Three.js, etc.). You'll see a `node_modules` folder appear.
+This downloads all required packages (React, Three.js, React Markdown, etc.). You'll see a `node_modules` folder appear.
 
 ## Step 3: Start the Development Server
 
@@ -65,6 +65,72 @@ Open your browser and go to:
 
 You should see the Solar Explorer homepage with the solar system navigation.
 
+## Environment Variables (for Chat Feature)
+
+The AI chat feature requires a **Groq API key**. Without it, the chat page will still load but will show an error when sending messages.
+
+### Getting a Groq API Key
+
+1. Go to [console.groq.com](https://console.groq.com)
+2. Sign up or log in
+3. Navigate to **API Keys** in the sidebar
+4. Click **Create API Key** and copy it
+
+### Setting the Key for Local Development
+
+For local development, create a `.env` file in the project root:
+
+```
+GROQ_API_KEY=your_api_key_here
+```
+
+Note: The Netlify function reads from `process.env.GROQ_API_KEY`, so for local testing you may need to use the Netlify CLI (see below).
+
+### Setting the Key for Production (Netlify)
+
+1. Go to your Netlify dashboard
+2. Select your site
+3. Go to **Site Settings** → **Environment Variables**
+4. Click **Add a variable**
+5. Key: `GROQ_API_KEY`
+6. Value: your Groq API key
+7. Save
+
+The chat feature will work after the next deployment.
+
+## Netlify Deployment
+
+### Option A: Git-based (Recommended)
+
+1. Push your code to GitHub
+2. Go to [app.netlify.com](https://app.netlify.com)
+3. Click **Add new site** → **Import an existing project**
+4. Select your GitHub repository
+5. Netlify auto-detects Vite — no build settings needed
+6. Click **Deploy site**
+7. Set the `GROQ_API_KEY` environment variable (see above)
+
+### Option B: Netlify CLI
+
+1. Install the Netlify CLI:
+   ```bash
+   npm install -g netlify-cli
+   ```
+2. Log in:
+   ```bash
+   netlify login
+   ```
+3. Initialize the site:
+   ```bash
+   netlify init
+   ```
+4. Deploy:
+   ```bash
+   netlify deploy --prod
+   ```
+
+Note: The Netlify CLI must be authenticated for deployment commands to work.
+
 ## Available Commands
 
 | Command | Description |
@@ -86,6 +152,12 @@ Make sure your browser supports WebGL (all modern browsers do). Try Chrome or Fi
 
 ### Port 5173 already in use
 Run `npm run dev -- --port 3000` to use a different port.
+
+### Chat shows "GROQ_API_KEY not configured"
+Make sure you've set the `GROQ_API_KEY` environment variable in your Netlify dashboard (for production) or `.env` file (for local development).
+
+### Visit counter not updating
+The visit counter uses a free API (countapi.mileshilliard.com). If it doesn't update immediately, it may be a temporary API delay. The counter also includes country-level tracking via ip-api.com.
 
 ## Need Help?
 

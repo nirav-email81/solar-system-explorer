@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
+import SEOHead from './components/SEOHead';
 import Home from './pages/Home';
 import SolarSystemView from './pages/SolarSystemView';
 import CelestialBodyPage from './pages/CelestialBodyPage';
@@ -10,6 +11,7 @@ import Chat from './pages/Chat';
 export default function App() {
   return (
     <div className="app">
+      <SEOHead />
       <Navigation />
       <main className="main-content">
         <Routes>

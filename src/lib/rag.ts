@@ -35,20 +35,25 @@ export function buildPrompt(query: string, context: RetrievedChunk[]): string {
   return `You are a knowledgeable solar system expert. Answer the user's question using the provided context as your primary source. You may supplement with general scientific knowledge when the context is insufficient — clearly indicate when you do so. Cite which celestial body or topic your answer comes from.\n\nCONTEXT:\n${contextStr}\n\nQUESTION: ${query}\n\nAnswer concisely and accurately. Reference specific sources when possible.`;
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 export interface ChatResponse {
   answer: string;
   sources: string[];
   thinking: string;
 }
 
-export async function chat(query: string): Promise<ChatResponse> {
+export async function chat(query: string, history: ChatMessage[] = []): Promise<ChatResponse> {
   const context = retrieve(query, 3);
   const prompt = buildPrompt(query, context);
 
   const response = await fetch('/.netlify/functions/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt }),
+    body: JSON.stringify({ prompt, history }),
   });
 
   if (!response.ok) {

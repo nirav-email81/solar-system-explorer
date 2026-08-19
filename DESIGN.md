@@ -26,12 +26,20 @@ solar-system/
 ├── package.json                   # Dependencies & scripts
 ├── tsconfig.json                  # TypeScript config
 ├── vite.config.ts                 # Vite config
+├── netlify.toml                   # Netlify build config
 ├── DESIGN.md                      # This document
 ├── SETUP.md                       # Setup instructions
 ├── prompt.txt                     # AI replication prompt
 ├── README.md                      # Project overview
 ├── .gitignore                     # Git ignore rules
 ├── public/                        # Static assets
+│   ├── _redirects                 # SPA fallback
+│   ├── robots.txt                 # Crawler directives
+│   └── sitemap.xml                # Route listing for SEO
+├── netlify/
+│   └── functions/
+│       ├── chat.ts                # Groq API serverless function
+│       └── track.ts               # Visit tracking + geolocation
 └── src/
     ├── main.tsx                   # App entry point
     ├── App.tsx                    # Root component + routing
@@ -41,17 +49,26 @@ solar-system/
     │   └── index.ts               # CelestialBody type definition
     ├── data/
     │   └── solarSystemData.ts     # Complete solar system dataset (29 entries)
+    ├── lib/
+    │   ├── tfidf.ts               # TF-IDF engine (tokenize, IDF, cosine similarity)
+    │   ├── chunkData.ts           # Knowledge chunking (~120 chunks from 29 bodies)
+    │   └── rag.ts                 # RAG orchestration (retrieve → prompt → chat)
     ├── pages/
-    │   ├── Home.tsx               # Landing page with search + categories
+    │   ├── Home.tsx               # Landing page with search + categories + visit counter
     │   ├── SolarSystemView.tsx    # 3D view page wrapper
     │   ├── SolarSystemFacts.tsx   # Solar System fact sheet page
     │   ├── CelestialBodyPage.tsx  # Detail page for any body
-    │   └── About.tsx              # About / credits page
+    │   ├── About.tsx              # About / credits / AI info / global reach
+    │   └── Chat.tsx               # Chat page wrapper
     └── components/
         ├── Navigation.tsx         # Top navigation bar
         ├── SolarSystem3D.tsx      # 3D scene (main component)
         ├── PlanetCard.tsx         # Card for body listings
-        └── SearchBar.tsx          # Live search component
+        ├── SearchBar.tsx          # Live search component
+        ├── ChatBot.tsx            # Chat UI with markdown, copy, categories
+        ├── VisitCounter.tsx       # Visitor counter + country flag
+        ├── TrafficMap.tsx         # Country visit bar chart
+        └── SEOHead.tsx            # Dynamic per-page meta tags
 ```
 
 ## Component Tree
@@ -197,11 +214,46 @@ Scene
 
 | Path | Component | Description |
 |------|-----------|-------------|
-| `/` | Home | Hero, search, planet grid, categories |
+| `/` | Home | Hero, search, planet grid, categories, visit counter |
 | `/solar-system-3d` | SolarSystemView | 3D interactive scene |
 | `/facts` | SolarSystemFacts | Solar System fact sheet |
 | `/body/:id` | CelestialBodyPage | Detailed info page |
-| `/about` | About | Project info + references |
+| `/about` | About | Project info, AI details, references, global reach |
+| `/chat` | Chat | AI-powered chat assistant |
+
+## RAG Pipeline Architecture
+
+```
+User Query
+  → TF-IDF Tokenize (client-side)
+  → Cosine Similarity against ~120 knowledge chunks
+  → Top-3 Retrieved Chunks
+  → Build Prompt (context + query + history)
+  → Netlify Function (serverless)
+  → Groq API (qwen/qwen3-27b)
+  → Response with <think> tags
+  → Thinking Extraction (decode HTML entities)
+  → Display Answer + Sources + Collapsible Thinking
+```
+
+### Knowledge Base
+
+- ~120 curated text chunks from 29 celestial bodies
+- Each chunk covers: overview, physical stats, orbital stats, atmosphere, exploration, facts
+- Client-side TF-IDF retrieval (no external embedding API)
+- Conversation threading: previous messages passed as context
+
+### Visit Tracking
+
+```
+Visitor lands on site
+  → Client calls /.netlify/functions/track
+  → Function calls ip-api.com (free, no key)
+  → Gets country + city
+  → Increments main counter on countapi
+  → Increments country-specific counter on countapi
+  → Returns { country, city, totalVisits, flag }
+```
 
 ## Styling
 

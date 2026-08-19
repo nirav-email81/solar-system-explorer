@@ -95,3 +95,28 @@ Key science details to include:
 - GitHub: https://github.com/nirav-email81/solar-system-explorer
 - Clone: git clone https://github.com/nirav-email81/solar-system-explorer.git
 - Setup: npm install && npm run dev
+
+## Additional Features
+
+### Visit Counter + Location Tracking
+- `VisitCounter.tsx` component on Home page hero section
+- `netlify/functions/track.ts` — calls ip-api.com (free, no key) for country geolocation
+- `TrafficMap.tsx` — displays country visit counts as a sorted bar chart on About page
+- Uses countapi.mileshilliard.com for persistent counters (main + per-country)
+
+### SEO
+- `SEOHead.tsx` — dynamic per-page `<title>` tags
+- `index.html` — meta description, keywords, Open Graph, Twitter cards, author tag
+- `public/robots.txt` — crawler directives
+- `public/sitemap.xml` — all routes listed for Google
+
+### AI/RAG Chat Improvements
+- Clickable source badges linking to `/body/{id}` detail pages
+- Copy answer button with clipboard API
+- Markdown rendering via `react-markdown`
+- Conversation threading (previous messages passed as context)
+- Suggestion categories (Planets, Moons, Missions, Science tabs)
+
+### Credits
+- Created by Nirav Chhaya (https://www.linkedin.com/in/niravchhaya/)
+- Mentioned in About page, README, and index.html meta author tag
