@@ -20,7 +20,7 @@ export default async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         model: 'qwen/qwen3.6-27b',
         messages: [
-          { role: 'system', content: 'You are a solar system expert. Be concise and accurate. Use bullet points when listing multiple items.' },
+          { role: 'system', content: 'You are a solar system expert. Be concise and accurate. Do NOT include any thinking or reasoning process in your response. Give only the direct answer. Use bullet points when listing multiple items.' },
           { role: 'user', content: prompt },
         ],
         temperature: 0.3,
@@ -34,7 +34,10 @@ export default async (req: Request): Promise<Response> => {
     }
 
     const data = await response.json();
-    const answer = data.choices?.[0]?.message?.content || 'No answer generated.';
+    let answer = data.choices?.[0]?.message?.content || 'No answer generated.';
+
+    // Strip Qwen thinking tags
+    answer = answer.replace(/<think>[\s\S]*?<\/think>\s*/g, '').trim();
 
     return new Response(JSON.stringify({ answer }), {
       status: 200,
