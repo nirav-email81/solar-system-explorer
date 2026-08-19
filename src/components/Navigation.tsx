@@ -28,6 +28,12 @@ export default function Navigation() {
             Facts
           </Link>
           <Link
+            to="/chat"
+            className={`nav-link ${isActive('/chat') ? 'active' : ''}`}
+          >
+            Chat
+          </Link>
+          <Link
             to="/about"
             className={`nav-link ${isActive('/about') ? 'active' : ''}`}
           >
