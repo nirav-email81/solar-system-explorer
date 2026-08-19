@@ -34,7 +34,10 @@ export default async (req: Request): Promise<Response> => {
     }
 
     const data = await response.json();
-    const raw = data.choices?.[0]?.message?.content || 'No answer generated.';
+    let raw = data.choices?.[0]?.message?.content || 'No answer generated.';
+
+    // Decode HTML-encoded think tags from Groq API
+    raw = raw.replace(/&lt;think&gt;/gi, '<think>').replace(/&lt;\/think&gt;/gi, '</think>');
 
     // Extract thinking and clean answer separately
     const thinkingMatch = raw.match(/<think>([\s\S]*?)<\/think>/);
