@@ -20,7 +20,7 @@ export default async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         model: 'qwen/qwen3.6-27b',
         messages: [
-          { role: 'system', content: 'You are a solar system expert. Be concise and accurate. Do NOT include any thinking or reasoning process in your response. Give only the direct answer. Use bullet points when listing multiple items.' },
+          { role: 'system', content: 'You are a knowledgeable solar system expert. Answer using the provided context as your primary source. You may supplement with general scientific knowledge when the context is insufficient — clearly indicate when you do so. Be concise and accurate. Do NOT include any thinking or reasoning process in your response. Give only the direct answer. Use bullet points when listing multiple items.' },
           { role: 'user', content: prompt },
         ],
         temperature: 0.3,

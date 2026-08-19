@@ -32,7 +32,7 @@ export function buildPrompt(query: string, context: RetrievedChunk[]): string {
     .map((c, i) => `[Source ${i + 1}: ${c.chunk.bodyName} - ${c.chunk.category}]\n${c.chunk.text}`)
     .join('\n\n');
 
-  return `You are a knowledgeable solar system expert. Answer the user's question using ONLY the information provided in the context below. If the context doesn't contain enough information, say so honestly. Cite which celestial body or topic your answer comes from.\n\nCONTEXT:\n${contextStr}\n\nQUESTION: ${query}\n\nAnswer concisely and accurately. Reference specific sources when possible.`;
+  return `You are a knowledgeable solar system expert. Answer the user's question using the provided context as your primary source. You may supplement with general scientific knowledge when the context is insufficient — clearly indicate when you do so. Cite which celestial body or topic your answer comes from.\n\nCONTEXT:\n${contextStr}\n\nQUESTION: ${query}\n\nAnswer concisely and accurately. Reference specific sources when possible.`;
 }
 
 export interface ChatResponse {
