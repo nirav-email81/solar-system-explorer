@@ -322,7 +322,20 @@ function SunMesh() {
         <meshStandardMaterial color="#FDB813" emissive="#FDB813"
           emissiveIntensity={isHovered || isFocused ? 2 : 1.5} />
       </mesh>
-      <pointLight intensity={2} distance={50} decay={2} color="#FDB813" />
+      {/* Corona glow layers */}
+      <mesh>
+        <sphereGeometry args={[4.2, 32, 32]} />
+        <meshBasicMaterial color="#FDB813" transparent opacity={0.08} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[5.5, 32, 32]} />
+        <meshBasicMaterial color="#FDB813" transparent opacity={0.04} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[7, 24, 24]} />
+        <meshBasicMaterial color="#ff8c00" transparent opacity={0.02} />
+      </mesh>
+      <pointLight intensity={2.5} distance={60} decay={2} color="#FDB813" />
       <Text position={[0, -3.5, 0]} fontSize={0.3} color="#aaaaaa" anchorX="center" anchorY="top">
         The Sun
       </Text>
@@ -534,7 +547,7 @@ export default function SolarSystem3D() {
           focusId={focusId} onBodyClick={handleBodyClick}>
           <color attach="background" args={['#0a0a1a']} />
           <ambientLight intensity={0.3} />
-          <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
+          <Stars radius={100} depth={60} count={6000} factor={3} saturation={0} fade speed={0.4} />
 
           <SunMesh />
           {planets.map(p => (

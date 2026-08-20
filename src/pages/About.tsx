@@ -1,5 +1,14 @@
-import { Link } from 'react-router-dom';
 import TrafficMap from '../components/TrafficMap';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
+function RevealSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const { ref, visible } = useScrollReveal();
+  return (
+    <section ref={ref} className={`about-section reveal ${visible ? 'visible' : ''}`} style={{ transitionDelay: `${delay}s` }}>
+      {children}
+    </section>
+  );
+}
 
 export default function About() {
   return (
@@ -7,7 +16,7 @@ export default function About() {
       <div className="about-content">
         <h1>About Solar Explorer</h1>
 
-        <section className="about-section">
+        <RevealSection>
           <h2>Our Mission</h2>
           <p>
             Solar Explorer is an interactive web application designed to share knowledge about
@@ -18,9 +27,9 @@ export default function About() {
           <p className="about-creator">
             Created by <a href="https://www.linkedin.com/in/niravchhaya/" target="_blank" rel="noopener noreferrer">Nirav Chhaya</a> &mdash; conceptualized, developed, and made available for public use.
           </p>
-        </section>
+        </RevealSection>
 
-        <section className="about-section">
+        <RevealSection delay={0.1}>
           <h2>What's Included</h2>
           <ul>
             <li><strong>The Sun</strong> &mdash; our life-giving star, with details on solar flares, solar wind, solar storms, and the solar atmosphere (photosphere, chromosphere, corona)</li>
@@ -34,9 +43,9 @@ export default function About() {
             <li><strong>Lagrange Points</strong> &mdash; gravitational equilibrium points hosting JWST, DSCOVR, and future missions</li>
             <li><strong>Solar System Fact Sheet</strong> &mdash; comprehensive overview including the galactic orbit and galactic year</li>
           </ul>
-        </section>
+        </RevealSection>
 
-        <section className="about-section">
+        <RevealSection delay={0.15}>
           <h2>Key Science Topics Covered</h2>
           <ul>
             <li><strong>Solar Atmosphere</strong> &mdash; layers from the photosphere (5,500°C) to the corona (1–3 million °C) and the coronal heating problem</li>
@@ -47,9 +56,9 @@ export default function About() {
             <li><strong>Galactic Orbit &amp; Galactic Year</strong> &mdash; the Solar System orbits the Milky Way at 828,000 km/h, taking ~230 million years per orbit (18–20 orbits completed)</li>
             <li><strong>Lagrange Points</strong> &mdash; L1–L5 gravitational equilibrium points used for observatories (JWST at L2) and future space stations (Lunar Gateway)</li>
           </ul>
-        </section>
+        </RevealSection>
 
-        <section className="about-section">
+        <RevealSection delay={0.2}>
           <h2>AI-Powered Chat Assistant</h2>
           <p>
             The chat feature uses <strong>Retrieval-Augmented Generation (RAG)</strong> — a technique where
@@ -57,7 +66,7 @@ export default function About() {
           </p>
           <ul>
             <li><strong>Retrieval:</strong> Client-side TF-IDF (Term Frequency–Inverse Document Frequency) keyword matching runs entirely in the browser with zero external API calls. Tokenization, stop word removal, TF-IDF vectorization, and cosine similarity scoring select the top-3 most relevant knowledge chunks.</li>
-            <li><strong>Knowledge Base:</strong> ~120 curated text chunks extracted from 29 celestial bodies and solar system topics, covering physical stats, orbital data, atmosphere, exploration missions, and interesting facts.</li>
+            <li><strong>Knowledge Base:</strong> ~130+ curated text chunks extracted from 29 celestial bodies and solar system topics, covering physical stats, orbital data, atmosphere, exploration missions, gravity concepts, and interesting facts.</li>
             <li><strong>Generation:</strong> Groq API running <code>qwen/qwen3-27b</code> — a fast inference engine accessed via Netlify Functions (serverless).</li>
             <li><strong>Thinking Extraction:</strong> The model's reasoning process (enclosed in <code>&lt;think&gt;</code> tags) is decoded from HTML entities, extracted, and displayed in a collapsible "Model thinking" UI element.</li>
             <li><strong>Prompt Design:</strong> The system prompt instructs the model to use retrieved context as primary source, supplement with general scientific knowledge when needed, and cite which celestial body or topic the answer comes from.</li>
@@ -67,9 +76,9 @@ export default function About() {
             The entire retrieval pipeline — TF-IDF engine, knowledge chunking system, RAG orchestration,
             and Netlify serverless function — was built from scratch in vanilla TypeScript with no external retrieval dependencies.
           </p>
-        </section>
+        </RevealSection>
 
-        <section className="about-section">
+        <RevealSection delay={0.25}>
           <h2>Data Sources &amp; References</h2>
           <p>
             All data is sourced from NASA, ESA, and other space agencies' publicly available
@@ -91,15 +100,15 @@ export default function About() {
             <li><a href="https://science.nasa.gov/mission/webb/" target="_blank" rel="noopener noreferrer">James Webb Space Telescope</a></li>
             <li><a href="https://science.nasa.gov/mission/voyager/" target="_blank" rel="noopener noreferrer">NASA Voyager Program</a></li>
           </ul>
-        </section>
+        </RevealSection>
 
-        <section className="about-section">
+        <RevealSection delay={0.3}>
           <h2>Global Reach</h2>
           <p>Visitor traffic by country — updated in real time.</p>
           <TrafficMap />
-        </section>
+        </RevealSection>
 
-        <section className="about-section">
+        <RevealSection delay={0.35}>
           <h2>Technology</h2>
           <p>
             Built with React, TypeScript, and Three.js (via React Three Fiber).
@@ -108,13 +117,15 @@ export default function About() {
             elliptical paths, orbital inclination, and variable speed controls.
             The AI chat uses a custom RAG pipeline with TF-IDF retrieval and Groq API generation.
           </p>
-        </section>
+        </RevealSection>
 
-        <section className="about-section tech-stack">
-          {['React', 'TypeScript', 'Three.js', 'React Three Fiber', 'React Three Drei', 'Vite', 'React Router', 'WebGL', 'Keplerian Orbit Simulation', 'Groq', 'Netlify Functions', 'RAG', 'TF-IDF', 'React Markdown'].map(tech => (
-            <span key={tech} className="tech-badge">{tech}</span>
-          ))}
-        </section>
+        <RevealSection delay={0.4}>
+          <div className="about-section tech-stack">
+            {['React', 'TypeScript', 'Three.js', 'React Three Fiber', 'React Three Drei', 'Vite', 'React Router', 'WebGL', 'Keplerian Orbit Simulation', 'Groq', 'Netlify Functions', 'RAG', 'TF-IDF', 'React Markdown'].map(tech => (
+              <span key={tech} className="tech-badge">{tech}</span>
+            ))}
+          </div>
+        </RevealSection>
       </div>
     </div>
   );

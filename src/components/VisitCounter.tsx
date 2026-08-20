@@ -39,7 +39,15 @@ export default function VisitCounter() {
     track();
   }, []);
 
-  if (visits === null) return null;
+  if (visits === null) {
+    return (
+      <div className="visit-counter-loading">
+        <div style={{ width: 80 }}>
+          <div className="skeleton-line" style={{ height: 14 }} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="visit-counter">

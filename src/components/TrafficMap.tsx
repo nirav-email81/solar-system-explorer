@@ -88,7 +88,21 @@ export default function TrafficMap() {
   const maxCount = countries.length > 0 ? countries[0].count : 1;
 
   if (loading) {
-    return <div className="traffic-loading">Loading visitor data...</div>;
+    return (
+      <div className="traffic-bars-loading">
+        {Array.from({ length: 5 }, (_, i) => (
+          <div key={i} className="traffic-row-loading">
+            <div className="skeleton-circle" style={{ width: 24, height: 24, borderRadius: 4 }} />
+            <div style={{ flex: 1 }}>
+              <div className="skeleton-bar" />
+            </div>
+            <div style={{ width: 40 }}>
+              <div className="skeleton-line" style={{ height: 10 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   }
 
   if (countries.length === 0) {

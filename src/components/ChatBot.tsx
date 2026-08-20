@@ -151,7 +151,7 @@ export default function ChatBot() {
               )}
               {msg.role === 'assistant' && (
                 <button
-                  className="chat-copy-btn"
+                  className={`chat-copy-btn ${copiedIdx === i ? 'copied' : ''}`}
                   onClick={() => handleCopy(msg.content, i)}
                   title="Copy answer"
                 >

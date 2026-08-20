@@ -1,0 +1,60 @@
+.skeleton-line {
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(106, 136, 255, 0.08) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  width: 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(106, 136, 255, 0.08) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.skeleton-card {
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.skeleton-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-card-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.skeleton-bar {
+  height: 8px;
+  background: linear-gradient(90deg, var(--bg-card) 25%, rgba(106, 136, 255, 0.08) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  width: 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

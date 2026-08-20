@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import SEOHead from './components/SEOHead';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import SolarSystemView from './pages/SolarSystemView';
 import CelestialBodyPage from './pages/CelestialBodyPage';
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/chat" element={<Chat />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }
