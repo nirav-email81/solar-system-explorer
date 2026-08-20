@@ -139,6 +139,27 @@ Note: The Netlify CLI must be authenticated for deployment commands to work.
 | `npm run build` | Build for production (outputs to `dist/`) |
 | `npm run preview` | Preview the production build locally |
 
+## Keyboard Shortcuts (3D View)
+
+| Key | Action |
+|-----|--------|
+| Space | Pause / Resume animation |
+| + / = | Increase simulation speed |
+| - | Decrease simulation speed |
+| R | Reset camera to overview |
+| O | Toggle orbit lines |
+| B | Toggle belt particles |
+| L | Toggle body labels |
+| F | Toggle fullscreen mode |
+
+## Toggle Controls (3D View)
+
+Click the toggle buttons in the top-right of the 3D scene to show/hide:
+- **Orbits** — dashed orbit lines for each body
+- **Belts** — asteroid belt, Kuiper belt, Trojan asteroids
+- **Labels** — body name labels
+- **L-points** — Lagrange points (Earth and Jupiter)
+
 ## Troubleshooting
 
 ### "npm is not recognized" error

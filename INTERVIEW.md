@@ -18,7 +18,7 @@ Created by [Nirav Chhaya](https://www.linkedin.com/in/niravchhaya/)
 
 ### 2. 3D Rendering & Orbital Mechanics
 
-> "The 3D scene uses React Three Fiber with elliptical orbits, orbital inclination, moons orbiting planets, belt particle systems, and interactive camera controls. Each body follows Keplerian orbital elements — eccentricity shapes the ellipse, inclination tilts the plane, and orbital speed follows Kepler's third law. The simulation handles 29 bodies simultaneously with smooth performance. I also built a custom RAG chatbot with a client-side TF-IDF retrieval engine — no external embedding API needed — that searches ~130+ knowledge chunks and feeds context to Groq's LLM via Netlify Functions."
+> "The 3D scene uses React Three Fiber with elliptical orbits, orbital inclination, moons orbiting planets, belt particle systems, and interactive camera controls. Each body follows Keplerian orbital elements — eccentricity shapes the ellipse, inclination tilts the plane, and orbital speed follows Kepler's third law. The simulation handles 29 bodies simultaneously with smooth performance. The scene includes planet self-rotation with axial tilt, Saturn's rings with a realistic Cassini Division, animated Sun corona pulsation layers, keyboard shortcuts, fullscreen mode, and toggle controls for orbits/belts/labels/Lagrange points. I also built a custom RAG chatbot with a client-side TF-IDF retrieval engine — no external embedding API needed — that searches ~130+ knowledge chunks and feeds context to Groq's LLM via Netlify Functions."
 
 ### 3. AI/RAG Architecture (Deep Dive)
 
@@ -30,7 +30,7 @@ Created by [Nirav Chhaya](https://www.linkedin.com/in/niravchhaya/)
 
 ### 5. Production Considerations
 
-> "The site includes SEO meta tags, Open Graph, dynamic per-page titles, a sitemap, and a visitor counter with country-level geolocation tracking. I used countapi for persistent counters and ip-api.com for free geolocation — no database required. The chat has conversation threading, markdown rendering, clickable source badges, and a system prompt that gracefully handles off-topic questions with a soft redirect. The knowledge scope is clearly displayed to users so they understand what the AI can and cannot answer."
+> "The site includes SEO meta tags, Open Graph, dynamic per-page titles, a sitemap, and a visitor counter with country-level geolocation tracking. I used countapi for persistent counters and ip-api.com for free geolocation — no database required. The chat has conversation threading, markdown rendering, clickable source badges, and a system prompt that gracefully handles off-topic questions with a soft redirect. The knowledge scope is clearly displayed to users so they understand what the AI can and cannot answer. The UI features scroll-reveal animations, skeleton loaders for async data, a mobile hamburger navigation, and a hero starfield effect — all built with pure CSS, no animation libraries."
 
 ---
 
@@ -105,7 +105,7 @@ QUESTION: What is the surface gravity of Mars?
 ### Technical Questions
 
 **Q: How does the 3D simulation work?**
-> "Each planet follows Keplerian orbital elements. The semi-major axis is derived from the AU distance, eccentricity shapes the ellipse, and inclination tilts the orbital plane. Position at time t uses the parametric ellipse equation: x = a*cos(t) - c, z = b*sin(t), where c = a*e and b = a*sqrt(1-e²). Orbital speed follows Kepler's third law — proportional to 1/sqrt(a³). The user can control speed from 0.25x to 5x and pause the simulation."
+> "Each planet follows Keplerian orbital elements. The semi-major axis is derived from the AU distance, eccentricity shapes the ellipse, and inclination tilts the orbital plane. Position at time t uses the parametric ellipse equation: x = a*cos(t) - c, z = b*sin(t), where c = a*e and b = a*sqrt(1-e²). Orbital speed follows Kepler's third law — proportional to 1/sqrt(a³). The user can control speed from 0.25x to 5x and pause the simulation. Planets self-rotate at their real relative speeds, axial tilt is applied to the mesh, and Saturn has 4 ring bands with a visible Cassini Division. The Sun uses a warm white color (#FFF5E1) for scientific accuracy, with animated pulsating corona layers. Keyboard shortcuts (Space, +/-, R, O, B, L, F) provide quick control, and toggle buttons show/hide orbits, belts, labels, and Lagrange points."
 
 **Q: How did you handle the chat scrolling bug?**
 > "It was a classic flexbox overflow issue. The `.chat-messages` container had `flex: 1` and `overflow-y: auto`, but CSS flex children default to `min-height: auto`, meaning they always expand to fit content and never trigger the scrollbar. The fix was adding `min-height: 0` to both `.chat-messages` and `.chat-container`, which allows them to shrink below their content size and enables the overflow scroll."
@@ -123,16 +123,16 @@ QUESTION: What is the surface gravity of Mars?
 
 ## Live Demo Flow
 
-1. **Open the site** — show the homepage with planet cards and hero section
-2. **Launch 3D View** — show the interactive solar system, click on a planet, demonstrate speed controls
+1. **Open the site** — show the homepage with planet cards, hero starfield, scroll-reveal animations, and skeleton loaders
+2. **Launch 3D View** — show the interactive solar system, click on a planet to focus, use keyboard shortcuts (Space to pause, F for fullscreen), toggle orbits/labels
 3. **Navigate to Chat** — show the welcome screen with suggestion categories (Planets, Moons, Missions, Science, Gravity)
 4. **Ask a question** — "What is tidal heating on Europa?" → show the answer with source badges
 5. **Show Model Thinking** — click "Model thinking" to reveal the LLM's reasoning process
 6. **Click a Source Badge** — navigate to Europa's detail page (proves source attribution works)
 7. **Ask a Follow-up** — "Could it support life?" → demonstrate conversation threading
 8. **Ask an Off-topic Question** — "What is the stock market?" → show the graceful redirect
-9. **Show Fact Sheet** — navigate to /facts, show the AU explanation section
-10. **Show About Page** — show creator credit, AI/RAG section, Global Reach traffic map
+9. **Show Fact Sheet** — navigate to /facts, show the AU explanation section and galactic orbit data
+10. **Show About Page** — show creator credit, AI/RAG section, Global Reach traffic map, and scroll-reveal on section cards
 
 ---
 

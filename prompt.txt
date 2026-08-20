@@ -101,18 +101,32 @@ Create `src/components/SolarSystem3D.tsx`:
 
 - **SimContext**: React context for speed, pause, hover, focus state
 - **Sun**: Emissive sphere at center with point light
+  - Color: warm white `#FFF5E1` (scientifically accurate, not golden yellow)
+  - 3 animated corona glow layers (pulsating with sine wave opacity)
+  - PointLight (intensity 2.5, distance 80, white)
 - **Planets**: Each planet as a group with:
   - Elliptical orbit path using: `x = a·cos(t) - c`, `z = b·sin(t)` where `c = a·e`, `b = a·√(1-e²)`
   - Orbital inclination: group tilted by `inclination_degrees`
   - Speed derived from Kepler's third law: proportional to `1/√a³`
+  - **Self-rotation**: each planet spins at its real relative speed (Earth=1.0, Jupiter=2.4, Venus=0.005)
+  - **Axial tilt**: applied to mesh rotation (Uranus 97.77°, Saturn 26.73°, etc.)
   - Dashed orbit ring (Line geometry) + invisible TubeGeometry for click targeting
   - Planet mesh with hover emissive glow + Html label
   - Click to focus camera (lerp to nearby vantage point, target snaps immediately)
-- **Moons**: Orbit around parent planet (not Sun), smaller scale, their own orbit rings
-- **Belt particles**: Asteroid belt (1000 particles), Kuiper belt (800 particles), Trojan swarms (200 particles each at L4/L5)
-- **Stars background**: 3000 random particles
+- **Saturn Rings**: 4 bands — Ring C (inner, `#B0A06A`), Ring B (main, `#C8B87A`), Cassini Division (gap, `#1a1a2e`), Ring A (outer, `#D4C48A`)
+- **Uranus Rings**: Light blue rings (`#7EC8E3`, opacity 0.25)
+- **Jupiter Rings**: Faint brown rings (`#A09070`, opacity 0.15)
+- **Moons**: Orbit around parent planet (not Sun), smaller scale, their own orbit rings with orbit line
+- **Belt particles**: Asteroid belt (800 particles), Kuiper belt (800 particles), Trojan swarms (200 particles each at L4/L5, clustered)
+- **Lagrange Points**: Earth L1/L2/L4/L5 (Earth color), Jupiter L4/L5 (Jupiter color) — displayed as small glowing spheres with labels
+- **Stars background**: 6000 random particles
 - **Speed controls**: 0.25x, 0.5x, 1x, 2x, 5x, pause/play, reset view button
-- **Camera**: PerspectiveCamera at [0, 50, 120], OrbitControls for drag/zoom/pan
+- **Toggle controls**: Orbits, Belts, Labels, L-points buttons
+- **Fullscreen toggle**: F key or button
+- **Keyboard shortcuts**: Space=pause, +/-=speed, R=reset, O=orbits, B=belts, L=labels, F=fullscreen
+- **Camera**: PerspectiveCamera with distance scaled by body size, OrbitControls for drag/zoom/pan
+- **Stars**: 6000 random positions (was 3000)
+- **Geometry**: 32x32 segments for all planets and Sun
 
 ---
 
@@ -242,13 +256,21 @@ Build a custom TF-IDF engine in ~120 lines of TypeScript:
 
 - Dark space theme (`#0a0a1a` background)
 - CSS custom properties for theming
-- Responsive design with media queries
-- Navigation bar: brand left, links right, subtle "(made with Opencode — big-pickle)" label
-- Card-based layouts with hover effects, backdrop blur
+- 4 responsive breakpoints: 480px (small mobile), 768px (mobile with hamburger nav), 1024px (tablet), 1200px (desktop)
+- Navigation bar: brand left, links right, hamburger menu on mobile (<768px), subtle "(made with Opencode — big-pickle)" label
+- Hero section: starfield effect using CSS radial-gradient + absolute positioning
+- Animated gradient title text, CTA button with shimmer effect
+- Card-based layouts with hover effects, backdrop blur, conic-gradient ring, body icon glow
+- Scroll-reveal animation (IntersectionObserver hook): cards fade in + translateY on viewport entry
+- Skeleton loading components: rectangular, circular, and bar variants for async data loading
 - Fact sheet tables with accent-colored labels, right-aligned values
-- Chat: chat messages, suggestion tabs, source badges, copy button, markdown content, category tabs
-- Traffic map: country bars, flag emoji, sorted chart
-- Visit counter: centered in hero, big number, flag display
+- Chat: chat messages, suggestion tabs, source badges with color coding, copy button with checkmark animation, markdown content, category tabs
+- Traffic map: skeleton loading bars, country bars, flag emoji, sorted chart
+- Visit counter: skeleton loading state, centered in hero, big number, flag display
+- Copy button animation: scale bounce + checkmark icon transition
+- Search dropdown: animated border, slide-in focus
+- Footer component: centered content, creator credit, social links
+- Mobile hamburger nav: toggle button, slide-in menu, overlay
 - Flexbox fix: `.chat-container` and `.chat-messages` with `min-height: 0` for proper overflow scrolling
 
 ---
@@ -259,32 +281,35 @@ Create these files in the project root:
 
 ### `README.md`
 - Project title, creator credit (Nirav Chhaya with LinkedIn link), live site link
-- Features list, tech stack table, quick start, deployment note
+- Features list (3D with rotation/tilt/rings/keyboard, RAG chat, scroll-reveal, skeleton loaders, hamburger nav)
+- Tech stack table, quick start, deployment note
 - Documentation links to SETUP.md, DESIGN.md, INTERVIEW.md, prompt.txt
 - "Built with Opencode" footer
 
 ### `DESIGN.md`
 - Project structure (file tree), data model, architecture overview
-- 3D scene structure (SimContext, planet system hierarchy, orbit math)
+- 3D scene structure (SimContext, planet system hierarchy, orbit math, Sun corona, rings, keyboard shortcuts)
 - RAG pipeline: TF-IDF retrieval → Groq generation → UI
 - Knowledge base: ~130+ chunks, categories, content types
 - Visit tracking flow
 - Routes table with all pages
-- Styling notes
+- Styling notes (4 breakpoints, scroll-reveal, skeleton, hamburger, starfield)
 
 ### `SETUP.md`
 - Prerequisites, installation, local dev
 - Groq API key setup (https://console.groq.com)
 - Environment variables (`GROQ_API_KEY`)
 - Netlify deployment + env vars
+- **Keyboard shortcuts table** (Space, +/-, R, O, B, L, F)
+- **Toggle controls documentation** (orbits, belts, labels, L-points)
 - Troubleshooting: API key, function not found, visit counter, chat scroll fix
 
 ### `INTERVIEW.md`
 - 30-second pitch
-- 5 key presentation points (full-stack ownership, 3D rendering, AI/RAG, data engineering, production considerations)
+- 5 key presentation points (full-stack ownership, 3D rendering with rotation/tilt/rings/keyboard/shortcuts, AI/RAG, data engineering, production with scroll-reveal/skeleton/hamburger)
 - RAG deep dive (Why RAG, TF-IDF pipeline, Groq generation, architecture rationale)
-- 11 Q&A pairs (RAG + technical)
-- 10-step live demo flow
+- 11 Q&A pairs (RAG + technical, including detailed 3D simulation question)
+- 10-step live demo flow (with 3D keyboard shortcuts, fullscreen, skeleton loaders)
 - Key metrics table
 - Tech stack summary
 

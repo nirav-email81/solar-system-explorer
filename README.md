@@ -10,15 +10,19 @@ An interactive 3D Solar System visualization built with React, TypeScript, and T
 
 ## Features
 
-- 3D interactive Solar System with elliptical, inclined orbits
+- 3D interactive Solar System with elliptical, inclined orbits, planet self-rotation, and axial tilt
+- Saturn rings with Cassini Division, Uranus and Jupiter rings
+- Sun with animated corona glow layers and warm white color (scientifically accurate)
+- Dashed orbit lines, moon orbit lines, Trojan asteroids clustered at L4/L5
+- Keyboard shortcuts: Space=pause, +/-=speed, O=orbits, B=belts, L=labels, F=fullscreen
+- Toggle controls for orbits, belts, labels, and Lagrange points
 - 29 celestial bodies with detailed physical and orbital data
 - AI-powered chat assistant (RAG + Groq API) covering planets, moons, gravity, orbital mechanics, and astronomy concepts
 - Gravity & orbital mechanics topics (Newton's law, tidal forces, Roche limit, resonance, Hill sphere, barycenter)
-- Search, category browsing, and detail pages
-- Speed controls, orbit ring clicking, hover tooltips
+- Search, category browsing, and detail pages with scroll-reveal animations
 - Solar System Fact Sheet with AU explanation, galactic orbit data
 - Global visitor tracking with country breakdown
-- Knowledge scope display with topic categories
+- Mobile-responsive with hamburger navigation
 
 ## Tech Stack
 

@@ -61,15 +61,19 @@ solar-system/
     │   ├── CelestialBodyPage.tsx  # Detail page for any body
     │   ├── About.tsx              # About / credits / AI info / global reach
     │   └── Chat.tsx               # Chat page wrapper
+    ├── hooks/
+    │   └── useScrollReveal.ts       # Intersection Observer scroll-reveal hook
     └── components/
-        ├── Navigation.tsx         # Top navigation bar
-        ├── SolarSystem3D.tsx      # 3D scene (main component)
-        ├── PlanetCard.tsx         # Card for body listings
-        ├── SearchBar.tsx          # Live search component
-        ├── ChatBot.tsx            # Chat UI with markdown, copy, categories
-        ├── VisitCounter.tsx       # Visitor counter + country flag
-        ├── TrafficMap.tsx         # Country visit bar chart
-        └── SEOHead.tsx            # Dynamic per-page meta tags
+        ├── Navigation.tsx           # Top nav with mobile hamburger menu
+        ├── SolarSystem3D.tsx        # 3D scene (main component)
+        ├── PlanetCard.tsx           # Card for body listings
+        ├── SearchBar.tsx            # Live search component
+        ├── ChatBot.tsx              # Chat UI with markdown, copy, categories
+        ├── VisitCounter.tsx         # Visitor counter + country flag
+        ├── TrafficMap.tsx           # Country visit bar chart
+        ├── SEOHead.tsx              # Dynamic per-page meta tags
+        ├── Footer.tsx               # Site footer with creator credit
+        └── Skeleton.tsx             # Skeleton loading components
 ```
 
 ## Component Tree
@@ -172,20 +176,23 @@ interface CelestialBody {
 Scene
 ├── Background: #0a0a1a
 ├── AmbientLight (0.3)
-├── Stars (particle system, 3000 stars)
+├── Stars (particle system, 6000 stars)
 ├── SunMesh (at origin)
-│   ├── SphereGeometry (glowing, emissive)
-│   └── PointLight (casts light)
+│   ├── SphereGeometry (32x32, warm white #FFF5E1, emissive)
+│   ├── 3 Corona glow layers (animated pulsation)
+│   └── PointLight (intensity 2.5, distance 80, white)
 ├── PlanetSystem[] (one per planet/dwarf planet)
-│   ├── Group (inclined rotation)
+│   ├── Group (inclined by orbital inclination)
 │   │   └── Group (elliptical orbit position, animated)
-│   │       ├── Planet Mesh (sphere)
-│   │       ├── Planet Label (Text)
-│   │       ├── Saturn Rings (if applicable)
-│   │       └── MoonBody[] (orbit within group)
-│   └── OrbitRing (elliptical line + invisible clickable tube)
-└── BeltMesh[] (particle systems)
-    └── Points (800 particles each)
+│   │       ├── BodyMesh (sphere, 32x32, self-rotating, axial tilt applied)
+│   │       ├── BodyLabel (visible for all body types including moons)
+│   │       ├── SaturnRings (4 bands: C, B, Cassini Division, A)
+│   │       ├── GenericRings (Uranus, Jupiter)
+│   │       └── MoonBody[] (orbit with visible orbit line)
+│   └── OrbitRing (dashed line + invisible clickable tube)
+├── BeltMesh[] (particle systems)
+│   └── Points (800 for asteroid/kuiper, 300 for trojan at L4/L5)
+└── LagrangePoints3D (Earth L1/L2/L4/L5, Jupiter L4/L5)
 ```
 
 ### Orbital Simulation
@@ -198,13 +205,48 @@ Scene
 - Orbital speed proportional to `1/√(a³)` (Kepler's Third Law)
 - User-controlled speed multiplier (0.25x to 5x) and pause
 
+### Planet Rendering
+
+- Self-rotation: each planet spins at its real relative speed (Earth=1.0, Jupiter=2.4, Venus=0.005)
+- Axial tilt: applied to mesh rotation (Uranus 97.77°, Saturn 26.73°, etc.)
+- Sun color: warm white `#FFF5E1` (scientifically accurate, not golden yellow)
+- Geometry: 32x32 segments for all planets and Sun
+
+### Ring Systems
+
+- **Saturn**: 4 bands — Ring C (inner, `#B0A06A`), Ring B (main, `#C8B87A`), Cassini Division (gap, `#1a1a2e`), Ring A (outer, `#D4C48A`)
+- **Uranus**: Light blue rings (`#7EC8E3`, opacity 0.25)
+- **Jupiter**: Faint brown rings (`#A09070`, opacity 0.15)
+- All rings use actual axial tilt from data
+
 ### Camera Controls
 
-- Default: overview position looking at origin
-- Click-to-focus: smooth camera animation toward any body
+- Default: overview position (25, 15, 25) looking at origin
+- Click-to-focus: smooth lerp camera animation toward any body
+- Camera distance scales by body size (closer to Mercury, further from Jupiter)
 - Reset button returns to overview
 - OrbitControls for user interaction (drag, zoom, pan)
 - Hover detection on bodies and orbit rings
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| Space | Pause / Resume |
+| + / = | Increase speed |
+| - | Decrease speed |
+| R | Reset view |
+| O | Toggle orbit lines |
+| B | Toggle belt particles |
+| L | Toggle labels |
+| F | Toggle fullscreen |
+
+### Toggle Controls
+
+- **Orbits**: Show/hide dashed orbit lines
+- **Belts**: Show/hide asteroid belt, Kuiper belt, Trojan asteroids
+- **Labels**: Show/hide body name labels
+- **L-points**: Show/hide Lagrange points
 
 ### Interactive Features
 
@@ -214,6 +256,7 @@ Scene
 - **Hover orbit**: brighter line + planet name label
 - **Speed controls**: 0.25x, 0.5x, 1x, 2x, 5x + pause/play
 - **Reset view**: return camera to overview
+- **Fullscreen**: toggle fullscreen mode
 
 ## Routes
 
