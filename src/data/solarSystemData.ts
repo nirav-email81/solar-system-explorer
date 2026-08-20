@@ -66,7 +66,7 @@ export const solarSystemData: CelestialBody[] = [
       'The corona (the Sun\'s outer atmosphere) reaches 1–3 million °C, far hotter than the visible surface at 5,500°C.',
       'The Parker Solar Probe has flown through the corona, sampling particles and magnetic fields in the Sun\'s upper atmosphere.',
     ],
-    color: '#FDB813',
+    color: '#FFF5E1',
     radius: 20,
   },
   {
