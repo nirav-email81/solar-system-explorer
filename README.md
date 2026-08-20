@@ -12,11 +12,13 @@ An interactive 3D Solar System visualization built with React, TypeScript, and T
 
 - 3D interactive Solar System with elliptical, inclined orbits
 - 29 celestial bodies with detailed physical and orbital data
-- AI-powered chat assistant (RAG + Groq API)
+- AI-powered chat assistant (RAG + Groq API) covering planets, moons, gravity, orbital mechanics, and astronomy concepts
+- Gravity & orbital mechanics topics (Newton's law, tidal forces, Roche limit, resonance, Hill sphere, barycenter)
 - Search, category browsing, and detail pages
 - Speed controls, orbit ring clicking, hover tooltips
-- Solar System Fact Sheet with galactic orbit data
+- Solar System Fact Sheet with AU explanation, galactic orbit data
 - Global visitor tracking with country breakdown
+- Knowledge scope display with topic categories
 
 ## Tech Stack
 
@@ -26,7 +28,7 @@ An interactive 3D Solar System visualization built with React, TypeScript, and T
 | 3D Engine | Three.js (React Three Fiber + Drei) |
 | Build Tool | Vite 5 |
 | AI Chat | Groq API (`qwen/qwen3-27b`) via Netlify Functions |
-| RAG | Client-side TF-IDF retrieval (~120 knowledge chunks) |
+| RAG | Client-side TF-IDF retrieval (~130+ knowledge chunks) |
 | Deployment | Netlify |
 | Routing | React Router v6 |
 | Markdown | React Markdown |
@@ -48,6 +50,7 @@ The site is deployed on Netlify. See [SETUP.md](SETUP.md) for environment variab
 
 - [SETUP.md](SETUP.md) — Installation and deployment guide
 - [DESIGN.md](DESIGN.md) — Architecture and component documentation
+- [INTERVIEW.md](INTERVIEW.md) — Technical interview guide (project presentation, RAG deep dive, Q&A)
 - [prompt.txt](prompt.txt) — AI replication prompt
 
 ---

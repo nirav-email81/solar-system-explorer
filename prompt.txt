@@ -120,3 +120,22 @@ Key science details to include:
 ### Credits
 - Created by Nirav Chhaya (https://www.linkedin.com/in/niravchhaya/)
 - Mentioned in About page, README, and index.html meta author tag
+
+## Additional Features (Latest)
+
+### Gravity & Orbital Mechanics Knowledge Chunks
+- 8 new chunks added to chunkData.ts: gravity-newton, gravity-tidal, gravity-resonance, gravity-assists, gravity-escape-velocity, gravity-hill-sphere, gravity-barycenter, gravity-orbital-decay
+- Covers Newton's law, tidal forces, Roche limit, orbital resonance, Laplace resonance, gravitational slingshots, escape velocity formula, Hill sphere, barycenter, orbital decay
+
+### AU Explanation
+- New "What is an AU?" section on Fact Sheet page with distance table and NASA link
+
+### Broader System Prompt
+- System prompt updated to cover astronomy + gravity concepts
+- Soft redirect rule for off-topic questions (finance, sports, etc.)
+
+### Chat Scroll Fix
+- Added `min-height: 0` to `.chat-container` and `.chat-messages` to fix flexbox overflow scrolling
+
+### Interview Guide
+- INTERVIEW.md created with project presentation points, RAG deep dive, Q&A, demo flow

@@ -26,6 +26,32 @@ export default function SolarSystemFacts() {
         </section>
 
         <section className="about-section">
+          <h2>What is an AU?</h2>
+          <p>
+            An <strong>Astronomical Unit (AU)</strong> is the average distance from
+            the Earth to the Sun — approximately <strong>149.6 million km</strong>
+            (93 million miles). It is the standard unit of measurement for distances
+            within the Solar System.
+          </p>
+          <table className="fact-sheet-table">
+            <tbody>
+              <tr><td>1 AU</td><td>~149.6 million km (~93 million miles)</td></tr>
+              <tr><td>Light travel time for 1 AU</td><td>~8.3 minutes</td></tr>
+              <tr><td>Mercury distance</td><td>~0.39 AU</td></tr>
+              <tr><td>Earth distance</td><td>1.00 AU (by definition)</td></tr>
+              <tr><td>Jupiter distance</td><td>~5.2 AU</td></tr>
+              <tr><td>Neptune distance</td><td>~30 AU</td></tr>
+              <tr><td>Voyager 1 (current)</td><td>~165 AU from Earth</td></tr>
+            </tbody>
+          </table>
+          <p className="about-creator">
+            <a href="https://science.nasa.gov/astrophysics/fundamental-concepts/astronomical-unit/" target="_blank" rel="noopener noreferrer">
+              Learn more about the Astronomical Unit (NASA)
+            </a>
+          </p>
+        </section>
+
+        <section className="about-section">
           <h2>Size &amp; Scale</h2>
           <table className="fact-sheet-table">
             <tbody>

@@ -159,6 +159,9 @@ Make sure you've set the `GROQ_API_KEY` environment variable in your Netlify das
 ### Visit counter not updating
 The visit counter uses a free API (countapi.mileshilliard.com). If it doesn't update immediately, it may be a temporary API delay. The counter also includes country-level tracking via ip-api.com.
 
+### Chat messages don't scroll
+If the chat page doesn't scroll to show new messages, ensure `.chat-messages` and `.chat-container` in `index.css` have `min-height: 0`. This is a common flexbox overflow issue where flex children default to `min-height: auto` and expand to fit content instead of triggering `overflow-y: auto`.
+
 ## Need Help?
 
 Open an issue at: https://github.com/nirav-email81/solar-system-explorer/issues

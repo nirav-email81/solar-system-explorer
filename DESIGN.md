@@ -29,6 +29,7 @@ solar-system/
 ├── netlify.toml                   # Netlify build config
 ├── DESIGN.md                      # This document
 ├── SETUP.md                       # Setup instructions
+├── INTERVIEW.md                   # Technical interview guide
 ├── prompt.txt                     # AI replication prompt
 ├── README.md                      # Project overview
 ├── .gitignore                     # Git ignore rules
@@ -97,6 +98,7 @@ App
     │       └── SimControls (speed/pause/reset UI)
     ├── /facts → SolarSystemFacts
     │   ├── Overview (age, location, counts, galactic year)
+    │   ├── What is an AU? (definition, distances, NASA link)
     │   ├── Size & Scale
     │   ├── Orbital & Physical Extremes
     │   ├── Heliosphere & Solar Activity
@@ -114,7 +116,10 @@ App
     └── /about → About
         ├── Mission & Included Bodies
         ├── Key Science Topics
-        ├── Reference Links
+        ├── AI-Powered Chat Assistant (RAG details)
+        ├── Data Sources & References
+        ├── Global Reach (TrafficMap)
+        ├── Technology
         └── Tech Stack
 ```
 
@@ -238,10 +243,22 @@ User Query
 
 ### Knowledge Base
 
-- ~120 curated text chunks from 29 celestial bodies
-- Each chunk covers: overview, physical stats, orbital stats, atmosphere, exploration, facts
+- ~130+ curated text chunks from 29 celestial bodies + solar system topics
+- Per-body chunks: overview, physical stats, orbital stats, atmosphere, exploration, facts
+- Concept chunks: Newton's law, tidal forces, orbital resonance, gravity assists, escape velocity, Hill sphere, barycenter, orbital decay
+- System chunks: overview, scale, galactic orbit, orbital directions, orbital speeds, out-of-plane
 - Client-side TF-IDF retrieval (no external embedding API)
 - Conversation threading: previous messages passed as context
+
+### Chat UX
+
+- Suggestion categories: Planets, Moons, Missions, Science, Gravity
+- Knowledge scope display on welcome screen
+- Soft redirect for off-topic questions (prompts user to ask astronomy questions)
+- Clickable source badges linking to body detail pages
+- Copy answer button with clipboard API
+- Markdown rendering via React Markdown
+- Collapsible "Model thinking" section showing LLM reasoning
 
 ### Visit Tracking
 
@@ -263,3 +280,4 @@ Visitor lands on site
 - Consistent card-based layouts
 - Accent color: blue (#6a88ff)
 - Backdrop blur effects for overlays
+- Flexbox `min-height: 0` on chat containers to fix overflow scrolling

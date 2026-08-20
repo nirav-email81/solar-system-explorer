@@ -36,6 +36,14 @@ const SUGGESTION_CATEGORIES: Record<string, string[]> = {
     'What is the Kuiper Belt?',
     'How hot is the Sun\'s corona?',
   ],
+  'Gravity': [
+    'How does gravity work in space?',
+    'What is tidal heating on Europa?',
+    'What is the Roche limit?',
+    'How do gravity assists work?',
+    'What is orbital resonance?',
+    'What would I weigh on Mars?',
+  ],
 };
 
 const bodyNameToId = new Map(
@@ -92,7 +100,7 @@ export default function ChatBot() {
       {messages.length === 0 && (
         <div className="chat-welcome">
           <h2>Ask the Solar System</h2>
-          <p>Ask anything about the 27 celestial bodies in our knowledge base — planets, moons, dwarf planets, belts, and more.</p>
+          <p>Ask anything about the Solar System and basic astronomy — planets, moons, space missions, gravity, orbital mechanics, AU, Kepler's laws, solar wind, and more.</p>
           <div className="chat-category-tabs">
             {Object.keys(SUGGESTION_CATEGORIES).map(cat => (
               <button
