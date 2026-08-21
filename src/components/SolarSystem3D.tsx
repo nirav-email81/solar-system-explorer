@@ -29,6 +29,7 @@ interface SimState {
   showBelts: boolean;
   showLabels: boolean;
   showLagrange: boolean;
+  lagrangeFocusPos: React.MutableRefObject<THREE.Vector3 | null>;
 }
 
 const SimContext = createContext<SimState>(null!);
@@ -304,12 +305,95 @@ function PlanetSystem({ planet, moons, scale }: {
   );
 }
 
+function LagrangePoint({ pt, parentPlanet, isHovered, isFocused, onClick, onPointerOver, onPointerOut }: {
+  pt: { id: string; label: string; pos: THREE.Vector3 };
+  parentPlanet: CelestialBody;
+  isHovered: boolean;
+  isFocused: boolean;
+  onClick: () => void;
+  onPointerOver: () => void;
+  onPointerOut: () => void;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const ringRef = useRef<THREE.Mesh>(null!);
+  const zoneRef = useRef<THREE.Group>(null!);
+  const color = new THREE.Color(LAGRANGE_COLORS[pt.id] || '#5A7A9A');
+  const scale = isHovered ? 1.3 : 1;
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    // Pulsating emissive intensity
+    if (meshRef.current) {
+      const mat = meshRef.current.material as THREE.MeshStandardMaterial;
+      const base = isHovered || isFocused ? 0.7 : 0.4;
+      mat.emissiveIntensity = base + 0.35 * Math.sin(t * 2.5 + pt.pos.x);
+    }
+    // Rotating outer glow ring
+    if (ringRef.current) {
+      ringRef.current.rotation.z = t * 0.8;
+      const mat = ringRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity = 0.15 + 0.12 * Math.sin(t * 1.8 + pt.pos.z);
+    }
+    // Slowly rotating zone indicator
+    if (zoneRef.current) {
+      zoneRef.current.rotation.y = t * 0.3;
+    }
+  });
+
+  return (
+    <group position={pt.pos}>
+      {/* Main pulsing sphere */}
+      <mesh
+        ref={meshRef}
+        onClick={onClick}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
+      >
+        <sphereGeometry args={[0.25 * scale, 16, 16]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={0.5}
+        />
+      </mesh>
+      {/* Outer glow ring */}
+      <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.35 * scale, 0.45 * scale, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.2} side={THREE.DoubleSide} />
+      </mesh>
+      {/* Zone indicator torus */}
+      <group ref={zoneRef}>
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.6, 0.015, 8, 48]} />
+          <meshBasicMaterial color={color} transparent opacity={0.18} />
+        </mesh>
+      </group>
+      {/* Label */}
+      <Text
+        position={[0, 0.4, 0]}
+        fontSize={0.18}
+        color="#dddddd"
+        anchorX="center"
+        anchorY="bottom"
+      >
+        {pt.label}
+      </Text>
+      {/* Hover tooltip */}
+      {isHovered && (
+        <Html position={[0, -0.45, 0]} center style={{ pointerEvents: 'none' }}>
+          <div className="orbit-label">{pt.label} · {parentPlanet.name}</div>
+        </Html>
+      )}
+    </group>
+  );
+}
+
 function LagrangePoints3D({ parentPlanet, planetPos, planetAU }: {
   parentPlanet: CelestialBody;
   planetPos: THREE.Vector3;
   planetAU: number;
 }) {
-  const { hoveredId, setHoveredId, focusId, onBodyClick, showLagrange } = useContext(SimContext);
+  const { hoveredId, setHoveredId, focusId, onBodyClick, showLagrange, lagrangeFocusPos } = useContext(SimContext);
   const navigate = useNavigate();
 
   const points = useMemo(() => {
@@ -343,38 +427,22 @@ function LagrangePoints3D({ parentPlanet, planetPos, planetAU }: {
     <group>
       {points.map(pt => {
         const isHovered = hoveredId === pt.id;
-        const isFocused = focusId === `lagrange-points`;
-        const color = new THREE.Color(LAGRANGE_COLORS[pt.id] || '#5A7A9A');
-        const scale = isHovered ? 1.5 : 1;
+        const isFocused = focusId === `lagrange-${pt.id}`;
         return (
-          <mesh
+          <LagrangePoint
             key={pt.id}
-            position={pt.pos}
-            onClick={() => navigate('/body/lagrange-points')}
+            pt={pt}
+            parentPlanet={parentPlanet}
+            isHovered={isHovered}
+            isFocused={isFocused}
+            onClick={() => {
+              lagrangeFocusPos.current = pt.pos.clone();
+              onBodyClick(`lagrange-${pt.id}`, pt.pos);
+              navigate('/body/lagrange-points', { replace: false });
+            }}
             onPointerOver={() => setHoveredId(pt.id)}
             onPointerOut={() => setHoveredId(null)}
-          >
-            <sphereGeometry args={[0.12 * scale, 16, 16]} />
-            <meshStandardMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={isHovered || isFocused ? 0.8 : 0.4}
-            />
-            <Text
-              position={[0, 0.25, 0]}
-              fontSize={0.15}
-              color="#cccccc"
-              anchorX="center"
-              anchorY="bottom"
-            >
-              {pt.label}
-            </Text>
-            {isHovered && (
-              <Html position={[0, -0.3, 0]} center style={{ pointerEvents: 'none' }}>
-                <div className="orbit-label">{pt.label} · {parentPlanet.name}</div>
-              </Html>
-            )}
-          </mesh>
+          />
         );
       })}
     </group>
@@ -579,7 +647,7 @@ function SceneLagrangePoints({ planets, scale }: { planets: CelestialBody[]; sca
 
 function CameraController() {
   const { camera, controls } = useThree();
-  const { focusId, positions } = useContext(SimContext);
+  const { focusId, positions, lagrangeFocusPos } = useContext(SimContext);
   const wasFocused = useRef(false);
   const lastPos = useRef(new THREE.Vector3());
   const _idealPos = useRef(new THREE.Vector3());
@@ -588,7 +656,12 @@ function CameraController() {
     if (!controls) return;
 
     if (focusId) {
-      const pos = positions.current.get(focusId);
+      let pos: THREE.Vector3 | undefined;
+      if (focusId.startsWith('lagrange-')) {
+        pos = lagrangeFocusPos.current || undefined;
+      } else {
+        pos = positions.current.get(focusId);
+      }
       if (pos) {
         (controls as any).target.copy(pos);
         if (!wasFocused.current) {
@@ -598,7 +671,7 @@ function CameraController() {
         // Scale camera distance by body size
         const body = solarSystemData.find(b => b.id === focusId);
         const bodyRadius = body ? getVisualRadius(body) : 1;
-        const dist = focusId === 'sun' ? 10 : Math.max(bodyRadius * 6, 3);
+        const dist = focusId === 'sun' ? 10 : focusId.startsWith('lagrange-') ? Math.max(bodyRadius * 4, 2.5) : Math.max(bodyRadius * 6, 3);
         _idealPos.current.copy(pos).add(new THREE.Vector3(dist * 0.5, dist * 0.4, dist));
         camera.position.lerp(_idealPos.current, 0.05);
       }
@@ -615,9 +688,9 @@ function CameraController() {
   return null;
 }
 
-function SimProvider({ children, speed, paused, positions, hoveredId, setHoveredId, focusId, onBodyClick, showOrbits, showBelts, showLabels, showLagrange }: React.PropsWithChildren<SimState>) {
+function SimProvider({ children, speed, paused, positions, hoveredId, setHoveredId, focusId, onBodyClick, showOrbits, showBelts, showLabels, showLagrange, lagrangeFocusPos }: React.PropsWithChildren<SimState>) {
   return (
-    <SimContext.Provider value={{ speed, paused, positions, hoveredId, setHoveredId, focusId, onBodyClick, showOrbits, showBelts, showLabels, showLagrange }}>
+    <SimContext.Provider value={{ speed, paused, positions, hoveredId, setHoveredId, focusId, onBodyClick, showOrbits, showBelts, showLabels, showLagrange, lagrangeFocusPos }}>
       {children}
     </SimContext.Provider>
   );
@@ -637,6 +710,7 @@ export default function SolarSystem3D() {
   const [showLagrange, setShowLagrange] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const positionsRef = useRef(new Map<string, THREE.Vector3>());
+  const lagrangeFocusPosRef = useRef<THREE.Vector3 | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const planets = solarSystemData.filter(b => b.type === 'planet' || b.type === 'dwarf-planet');
@@ -649,6 +723,7 @@ export default function SolarSystem3D() {
 
   const handleUnfocus = useCallback(() => {
     setFocusId(null);
+    lagrangeFocusPosRef.current = null;
   }, []);
 
   const toggleFullscreen = useCallback(() => {
@@ -687,6 +762,7 @@ export default function SolarSystem3D() {
           break;
         case 'r':
           setFocusId(null);
+          lagrangeFocusPosRef.current = null;
           break;
         case 'o':
           setShowOrbits(v => !v);
@@ -733,7 +809,8 @@ export default function SolarSystem3D() {
         <SimProvider speed={speed} paused={paused} positions={positionsRef}
           hoveredId={hoveredId} setHoveredId={setHoveredId}
           focusId={focusId} onBodyClick={handleBodyClick}
-          showOrbits={showOrbits} showBelts={showBelts} showLabels={showLabels} showLagrange={showLagrange}>
+          showOrbits={showOrbits} showBelts={showBelts} showLabels={showLabels} showLagrange={showLagrange}
+          lagrangeFocusPos={lagrangeFocusPosRef}>
           <color attach="background" args={['#0a0a1a']} />
           <ambientLight intensity={0.3} />
           <Stars radius={100} depth={60} count={6000} factor={3} saturation={0} fade speed={0.4} />
