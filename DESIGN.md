@@ -192,7 +192,7 @@ Scene
 │   └── OrbitRing (dashed line + invisible clickable tube)
 ├── BeltMesh[] (particle systems)
 │   └── Points (800 for asteroid/kuiper, 300 for trojan at L4/L5)
-└── LagrangePoints3D (Earth L1/L2/L4/L5, Jupiter L4/L5)
+└── LagrangePoints3D (Earth L1-L5, pulsing glow, zone indicators, click-to-focus)
 ```
 
 ### Orbital Simulation

@@ -45,7 +45,7 @@ A **full-stack web application** that visualizes the Solar System in 3D with an 
 
 | Metric | Value |
 |--------|-------|
-| Celestial bodies | **29** (Sun, 8 planets, Moon, 8 moons, dwarf planets, belts, Lagrange) |
+| Celestial bodies | **29** (Sun, 8 planets, Moon, 8 moons, dwarf planets, belts, Lagrange L1-L5) |
 | Knowledge chunks | **~130+** curated astronomical entries |
 | Tech stack | React, TypeScript, Three.js, Groq API |
 | Total cost | **$0** (all free-tier services) |

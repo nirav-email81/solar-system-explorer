@@ -118,7 +118,11 @@ Create `src/components/SolarSystem3D.tsx`:
 - **Jupiter Rings**: Faint brown rings (`#A09070`, opacity 0.15)
 - **Moons**: Orbit around parent planet (not Sun), smaller scale, their own orbit rings with orbit line
 - **Belt particles**: Asteroid belt (800 particles), Kuiper belt (800 particles), Trojan swarms (200 particles each at L4/L5, clustered)
-- **Lagrange Points**: Earth L1/L2/L4/L5 (Earth color), Jupiter L4/L5 (Jupiter color) — displayed as small glowing spheres with labels
+- **Lagrange Points**: Earth L1-L5 only (L1/L2 along Sun-Earth axis, L3 opposite Sun, L4/L5 at ±60°)
+  - Pulsating glow spheres (radius 0.25, emissive sine wave animation)
+  - Outer glow ring (rotating, fading)
+  - Zone indicator torus (slowly rotating, semi-transparent)
+  - Click-to-focus camera (zooms to point, press R to unfocus)
 - **Stars background**: 6000 random particles
 - **Speed controls**: 0.25x, 0.5x, 1x, 2x, 5x, pause/play, reset view button
 - **Toggle controls**: Orbits, Belts, Labels, L-points buttons

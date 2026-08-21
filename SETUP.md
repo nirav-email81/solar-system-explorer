@@ -158,7 +158,7 @@ Click the toggle buttons in the top-right of the 3D scene to show/hide:
 - **Orbits** — dashed orbit lines for each body
 - **Belts** — asteroid belt, Kuiper belt, Trojan asteroids
 - **Labels** — body name labels
-- **L-points** — Lagrange points (Earth and Jupiter)
+- **L-points** — Earth Lagrange points L1-L5 (pulsing glow, zone indicators, click-to-focus)
 
 ## Troubleshooting
 

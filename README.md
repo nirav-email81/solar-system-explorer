@@ -15,7 +15,7 @@ An interactive 3D Solar System visualization built with React, TypeScript, and T
 - Sun with animated corona glow layers and warm white color (scientifically accurate)
 - Dashed orbit lines, moon orbit lines, Trojan asteroids clustered at L4/L5
 - Keyboard shortcuts: Space=pause, +/-=speed, O=orbits, B=belts, L=labels, F=fullscreen
-- Toggle controls for orbits, belts, labels, and Lagrange points
+- Toggle controls for orbits, belts, labels, and Earth Lagrange points L1-L5 (pulsing glow, zone indicators, click-to-focus)
 - 29 celestial bodies with detailed physical and orbital data
 - AI-powered chat assistant (RAG + Groq API) covering planets, moons, gravity, orbital mechanics, and astronomy concepts
 - Gravity & orbital mechanics topics (Newton's law, tidal forces, Roche limit, resonance, Hill sphere, barycenter)
