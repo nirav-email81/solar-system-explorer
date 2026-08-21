@@ -9,12 +9,11 @@ import { useNavigate } from 'react-router-dom';
 const DEG60 = Math.PI / 3;
 const SUN_WARM_WHITE = '#FFF5E1';
 const LAGRANGE_COLORS: Record<string, string> = {
-  'l4-earth': '#22d3ee',
-  'l5-earth': '#2dd4bf',
   'l1-earth': '#818cf8',
   'l2-earth': '#a78bfa',
-  'l4-jupiter': '#34d399',
-  'l5-jupiter': '#10b981',
+  'l3-earth': '#f472b6',
+  'l4-earth': '#22d3ee',
+  'l5-earth': '#2dd4bf',
 };
 
 interface SimState {
@@ -403,12 +402,10 @@ function LagrangePoints3D({ parentPlanet, planetPos, planetAU }: {
     const dir = planetPos.clone().normalize();
     const points: { id: string; label: string; pos: THREE.Vector3 }[] = [];
 
-    if (parentPlanet.id === 'earth') {
-      const l1Fraction = 1 - 0.008 * (1 / planetAU);
-      const l2Fraction = 1 + 0.008 * (1 / planetAU);
-      points.push({ id: 'l1-earth', label: 'L1', pos: dir.clone().multiplyScalar(dist * l1Fraction) });
-      points.push({ id: 'l2-earth', label: 'L2', pos: dir.clone().multiplyScalar(dist * l2Fraction) });
-    }
+    const l1Offset = 0.8;
+    points.push({ id: 'l1-earth', label: 'L1', pos: dir.clone().multiplyScalar(dist - l1Offset) });
+    points.push({ id: 'l2-earth', label: 'L2', pos: dir.clone().multiplyScalar(dist + l1Offset) });
+    points.push({ id: 'l3-earth', label: 'L3', pos: dir.clone().multiplyScalar(-dist) });
 
     const l4Angle = new THREE.Euler(0, DEG60, 0);
     const l5Angle = new THREE.Euler(0, -DEG60, 0);
@@ -622,7 +619,7 @@ function OrbitRing({ body, scale }: { body: CelestialBody; scale: number }) {
 
 function SceneLagrangePoints({ planets, scale }: { planets: CelestialBody[]; scale: number }) {
   const { positions } = useContext(SimContext);
-  const targets = ['earth', 'jupiter'];
+  const targets = ['earth'];
 
   return (
     <>
