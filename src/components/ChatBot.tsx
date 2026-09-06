@@ -79,7 +79,7 @@ export default function ChatBot() {
       const { answer, sources, thinking } = await chat(query, history);
       setMessages(prev => [...prev, { role: 'assistant', content: answer, sources, thinking }]);
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'assistant', content: `Error: ${err}. Make sure GROQ_API_KEY is configured in Netlify.` }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: `Error: ${err instanceof Error ? err.message : err}. Make sure GROQ_API_KEY is configured in Netlify.` }]);
     } finally {
       setLoading(false);
     }

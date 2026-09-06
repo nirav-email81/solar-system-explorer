@@ -57,7 +57,9 @@ export async function chat(query: string, history: ChatMessage[] = []): Promise<
   });
 
   if (!response.ok) {
-    throw new Error(`Chat API error: ${response.status}`);
+    const errBody = await response.json().catch(() => ({}));
+    const errMsg = (errBody as any).error || `HTTP ${response.status}`;
+    throw new Error(errMsg);
   }
 
   const data = await response.json();
