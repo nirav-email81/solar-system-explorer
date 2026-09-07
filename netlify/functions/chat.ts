@@ -23,29 +23,43 @@ export default async (req: Request): Promise<Response> => {
     let data: any = null;
 
     for (const model of models) {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${GROQ_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model,
-          messages: [
-            { role: 'system', content: 'You are a knowledgeable astronomy expert specializing in the Solar System, planets, moons, dwarf planets, asteroids, comets, Lagrange points, space exploration, and related astrophysical concepts.\n\nYou can answer questions about:\n- Celestial bodies (planets, moons, dwarf planets, belts, Lagrange points)\n- Gravity and orbital mechanics (Newton\'s law, Kepler\'s laws, tidal forces, escape velocity, orbital resonance, Roche limit, Hill sphere, barycenter, gravitational assists, orbital decay)\n- Astronomical concepts (AU, light-year, parsec, scale and distances)\n- Solar phenomena (solar wind, flares, CMEs, heliosphere, corona)\n- Space phenomena (Van Allen belts, radiation)\n- Space missions (Voyager, Juno, Cassini, New Horizons, Parker Solar Probe, JWST, Lucy, etc.)\n\nRULES:\n1. Answer using the provided context as your primary source.\n2. You may supplement with general scientific knowledge when the context is insufficient — clearly indicate when you do so.\n3. If the question is clearly outside astronomy and space science (e.g., finance, sports, geography unrelated to space), politely respond: "I\'m a Solar System and astronomy expert — I can help with questions about planets, moons, space missions, orbital mechanics, and astronomical concepts. Try asking about AU, Kepler\'s laws, or the Voyager missions!"\n4. Keep answers concise and accurate. Use bullet points when listing multiple items.\n5. Do NOT include any thinking or reasoning process in your response.' },
-            ...historyMessages,
-            { role: 'user', content: prompt },
-          ],
-          temperature: 0.3,
-          max_tokens: 2048,
-        }),
-      });
+      // Retry each model up to 2 times on transient errors (5xx, 429) or network failures
+      for (let attempt = 0; attempt < 2; attempt++) {
+        let response: Response;
+        try {
+          response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${GROQ_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model,
+              messages: [
+                { role: 'system', content: 'You are a knowledgeable astronomy expert specializing in the Solar System, planets, moons, dwarf planets, asteroids, comets, Lagrange points, space exploration, and related astrophysical concepts.\n\nYou can answer questions about:\n- Celestial bodies (planets, moons, dwarf planets, belts, Lagrange points)\n- Gravity and orbital mechanics (Newton\'s law, Kepler\'s laws, tidal forces, escape velocity, orbital resonance, Roche limit, Hill sphere, barycenter, gravitational assists, orbital decay)\n- Astronomical concepts (AU, light-year, parsec, scale and distances)\n- Solar phenomena (solar wind, flares, CMEs, heliosphere, corona)\n- Space phenomena (Van Allen belts, radiation)\n- Space missions (Voyager, Juno, Cassini, New Horizons, Parker Solar Probe, JWST, Lucy, etc.)\n\nRULES:\n1. Answer using the provided context as your primary source.\n2. You may supplement with general scientific knowledge when the context is insufficient — clearly indicate when you do so.\n3. If the question is clearly outside astronomy and space science (e.g., finance, sports, geography unrelated to space), politely respond: "I\'m a Solar System and astronomy expert — I can help with questions about planets, moons, space missions, orbital mechanics, and astronomical concepts. Try asking about AU, Kepler\'s laws, or the Voyager missions!"\n4. Keep answers concise and accurate. Use bullet points when listing multiple items.\n5. Do NOT include any thinking or reasoning process in your response.' },
+                ...historyMessages,
+                { role: 'user', content: prompt },
+              ],
+              temperature: 0.3,
+              max_tokens: 2048,
+            }),
+          });
+        } catch (fetchErr) {
+          lastError = `network error: ${fetchErr}`;
+          if (attempt === 0) continue;
+          break;
+        }
 
-      if (response.ok) {
-        data = await response.json();
-        break;
+        if (response.ok) {
+          data = await response.json();
+          break;
+        }
+        lastError = await response.text();
+        // Retry only on transient server/rate-limit errors, not on 4xx (invalid model/key)
+        if (response.status < 500 && response.status !== 429) break;
+        if (attempt === 0) continue;
       }
-      lastError = await response.text();
+      if (data) break;
     }
 
     if (!data) {
