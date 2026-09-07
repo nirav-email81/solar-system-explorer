@@ -18,7 +18,7 @@ export default async (req: Request): Promise<Response> => {
         }))
       : [];
 
-    const models = ['qwen/qwen3.6-27b', 'qwen/qwen3-32b', 'meta-llama/llama-4-scout-17b-16e-instruct'];
+    const models = ['qwen/qwen3.6-27b', 'qwen/qwen3.8-27b', 'openai/gpt-oss-20b'];
     let lastError = '';
     let data: any = null;
 
