@@ -67,7 +67,7 @@ export default function About() {
           <ul>
             <li><strong>Retrieval:</strong> Client-side TF-IDF (Term Frequency–Inverse Document Frequency) keyword matching runs entirely in the browser with zero external API calls. Tokenization, stop word removal, TF-IDF vectorization, and cosine similarity scoring select the top-3 most relevant knowledge chunks.</li>
             <li><strong>Knowledge Base:</strong> ~130+ curated text chunks extracted from 29 celestial bodies and solar system topics, covering physical stats, orbital data, atmosphere, exploration missions, gravity concepts, and interesting facts.</li>
-            <li><strong>Generation:</strong> Groq API running <code>qwen/qwen3-27b</code> — a fast inference engine accessed via Netlify Functions (serverless).</li>
+            <li><strong>Generation:</strong> Groq API — a fast inference engine accessed via Netlify Functions (serverless), using <code>qwen/qwen3.6-27b</code> with a fallback chain (<code>qwen/qwen3.8-27b</code> → <code>openai/gpt-oss-20b</code>) and retries on transient errors.</li>
             <li><strong>Thinking Extraction:</strong> The model's reasoning process (enclosed in <code>&lt;think&gt;</code> tags) is decoded from HTML entities, extracted, and displayed in a collapsible "Model thinking" UI element.</li>
             <li><strong>Prompt Design:</strong> The system prompt instructs the model to use retrieved context as primary source, supplement with general scientific knowledge when needed, and cite which celestial body or topic the answer comes from.</li>
             <li><strong>Conversation Threading:</strong> Previous messages are passed as context so the model can handle follow-up questions naturally.</li>

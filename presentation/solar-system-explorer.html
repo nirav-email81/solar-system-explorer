@@ -163,8 +163,9 @@ section.end h2 { color: #64b5f6; }
                     POST /chat     │
                                    ▼
               ┌────────────────────────────────┐
-              │   Netlify Function (Node.js)   │
-              │   → Groq API (qwen/qwen3-27b)  │
+│   Netlify Function (Node.js)   │
+               │   → Groq API (qwen3.6-27b +  │
+               │     fallback chain + retries) │
               └────────────────────────────────┘
 </code></pre>
 </section>
@@ -348,7 +349,7 @@ section.end h2 { color: #64b5f6; }
 Context: [Source 1] [Source 2] [Source 3]
 Question: &quot;What causes tidal heating on Europa?&quot;
          ↓
-    Groq API (qwen/qwen3-27b)
+    Groq (qwen3.6-27b → qwen3.8-27b → gpt-oss-20b)
          ↓
     Answer + Thinking Tags
 </code></pre>
@@ -602,7 +603,7 @@ section.end h2 { color: #64b5f6; }
 </tr>
 <tr>
 <td>AI Chat</td>
-<td>Groq API (<code>qwen/qwen3-27b</code>)</td>
+<td>Groq API (<code>qwen/qwen3.6-27b</code> + fallback chain)</td>
 </tr>
 <tr>
 <td>RAG</td>

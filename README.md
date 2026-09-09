@@ -31,7 +31,7 @@ An interactive 3D Solar System visualization built with React, TypeScript, and T
 | Framework | React 18 + TypeScript |
 | 3D Engine | Three.js (React Three Fiber + Drei) |
 | Build Tool | Vite 5 |
-| AI Chat | Groq API (`qwen/qwen3-27b`) via Netlify Functions |
+| AI Chat | Groq API (`qwen/qwen3.6-27b` + fallback chain) via Netlify Functions |
 | RAG | Client-side TF-IDF retrieval (~130+ knowledge chunks) |
 | Deployment | Netlify |
 | Routing | React Router v6 |

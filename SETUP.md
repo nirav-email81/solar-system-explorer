@@ -177,6 +177,12 @@ Run `npm run dev -- --port 3000` to use a different port.
 ### Chat shows "GROQ_API_KEY not configured"
 Make sure you've set the `GROQ_API_KEY` environment variable in your Netlify dashboard (for production) or `.env` file (for local development).
 
+### Chat shows a 502 error
+The chat function uses a fallback model chain (`qwen/qwen3.6-27b` → `qwen/qwen3.8-27b` → `openai/gpt-oss-20b`) with automatic retries on transient errors. If you still see a 502:
+1. Verify `GROQ_API_KEY` is set and valid (test with a direct Groq API call)
+2. Check Netlify function logs for the exact error from Groq
+3. The fallback models may have been deprecated — check current models with the Groq `/models` endpoint and update the `models` array in `netlify/functions/chat.ts`
+
 ### Visit counter not updating
 The visit counter uses a free API (countapi.mileshilliard.com). If it doesn't update immediately, it may be a temporary API delay. The counter also includes country-level tracking via ip-api.com.
 

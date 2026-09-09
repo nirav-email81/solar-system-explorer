@@ -277,12 +277,21 @@ User Query
   → Cosine Similarity against ~120 knowledge chunks
   → Top-3 Retrieved Chunks
   → Build Prompt (context + query + history)
-  → Netlify Function (serverless)
-  → Groq API (qwen/qwen3-27b)
-  → Response with <think> tags
+✓  → Netlify Function (serverless)
+  → Groq API (primary qwen/qwen3.6-27b, fallback chain)
+  → Response with <thinking> tags
   → Thinking Extraction (decode HTML entities)
   → Display Answer + Sources + Collapsible Thinking
 ```
+
+### Model Resilience
+
+- Primary model: `qwen/qwen3.6-27b`
+- Fallback chain: `qwen/qwen3.8-27b` → `openai/gpt-oss-20b`
+- Each model retries once on transient errors (5xx / 429 rate limits)
+- Non-transient errors (4xx, invalid model/key) skip retry and move to next model
+- Prevents 502s when a single model hits Groq's free-tier per-model quota
+- Client shows the actual error from the function (not just a status code)
 
 ### Knowledge Base
 

@@ -68,8 +68,9 @@ A **full-stack web application** that visualizes the Solar System in 3D with an 
                     POST /chat     │
                                    ▼
               ┌────────────────────────────────┐
-              │   Netlify Function (Node.js)   │
-              │   → Groq API (qwen/qwen3-27b)  │
+│   Netlify Function (Node.js)   │
+               │   → Groq API (qwen3.6-27b +  │
+               │     fallback chain + retries) │
               └────────────────────────────────┘
 ```
 
@@ -128,7 +129,7 @@ System: "You are a Solar System expert..."
 Context: [Source 1] [Source 2] [Source 3]
 Question: "What causes tidal heating on Europa?"
          ↓
-    Groq API (qwen/qwen3-27b)
+    Groq (qwen3.6-27b → qwen3.8-27b → gpt-oss-20b)
          ↓
     Answer + Thinking Tags
 ```
@@ -206,7 +207,7 @@ Question: "What causes tidal heating on Europa?"
 | Framework | React 18 + TypeScript |
 | 3D Engine | Three.js (React Three Fiber + Drei) |
 | Build | Vite 5 |
-| AI Chat | Groq API (`qwen/qwen3-27b`) |
+| AI Chat | Groq API (`qwen/qwen3.6-27b` + fallback chain) |
 | RAG | Client-side TF-IDF (~130+ chunks) |
 | Serverless | Netlify Functions |
 | Routing | React Router v6 |

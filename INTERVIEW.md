@@ -67,7 +67,7 @@ CONTEXT: [Source 1: Mars - Physical]...
 QUESTION: What is the surface gravity of Mars?
 ```
 
-> "This prompt is sent to a Netlify Function which calls Groq's API (model: qwen/qwen3-27b). I chose Groq for speed — responses come back in under 2 seconds. The response is parsed to extract thinking tags into a collapsible UI element."
+> "This prompt is sent to a Netlify Function which calls Groq's API (primary model: qwen/qwen3.6-27b). I chose Groq for speed — responses come back in under 2 seconds. The function uses a fallback chain (qwen/qwen3.8-27b → openai/gpt-oss-20b) and retries on transient rate-limit/server errors, so a single model hitting its per-model quota never breaks the chat. The response is parsed to extract thinking tags into a collapsible UI element."
 
 ### Why This Architecture?
 
@@ -160,7 +160,7 @@ QUESTION: What is the surface gravity of Mars?
 | Framework | React 18 + TypeScript |
 | 3D Engine | Three.js (React Three Fiber + Drei) |
 | Build Tool | Vite 5 |
-| AI Chat | Groq API (`qwen/qwen3-27b`) via Netlify Functions |
+| AI Chat | Groq API (`qwen/qwen3.6-27b` + fallback chain) via Netlify Functions |
 | RAG | Client-side TF-IDF retrieval (~130+ knowledge chunks) |
 | Deployment | Netlify (free tier) |
 | Routing | React Router v6 |
